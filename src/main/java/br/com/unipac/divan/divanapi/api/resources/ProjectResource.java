@@ -1,6 +1,10 @@
 package br.com.unipac.divan.divanapi.api.resources;
 
-
+import br.com.unipac.divan.divanapi.api.dto.request.association.project.ProjectRequest;
+import br.com.unipac.divan.divanapi.api.dto.response.association.project.ProjectResponse;
+import br.com.unipac.divan.divanapi.api.mapper.ProjectMapper;
+import br.com.unipac.divan.divanapi.model.entities.association.project.Project;
+import br.com.unipac.divan.divanapi.model.service.ProjectService;
 import br.com.unipac.divan.divanapi.util.RestUtils;
 import io.swagger.annotations.*;
 import jakarta.validation.Valid;
@@ -16,7 +20,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/problemTypes")
+@RequestMapping("/v1/projects")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Api(value = "Projects")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

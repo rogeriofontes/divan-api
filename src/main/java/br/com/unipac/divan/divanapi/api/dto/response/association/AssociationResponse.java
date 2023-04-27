@@ -2,9 +2,9 @@ package br.com.unipac.divan.divanapi.api.dto.response.association;
 
 
 import br.com.unipac.divan.divanapi.api.dto.response.patient.PatientTypeResponse;
-import br.com.unipac.divan.divanapi.model.domain.AuditModel;
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Builder
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @ToString
 @Data
-public class AssociationResponse extends AuditModel {
+public class AssociationResponse implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,5 +24,4 @@ public class AssociationResponse extends AuditModel {
     private String about;
     private boolean recurrent;
     private LocalDateTime foundationDate;
-    private PatientTypeResponse patientType;
 }

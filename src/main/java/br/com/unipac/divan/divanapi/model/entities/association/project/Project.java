@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @ToString
 @Data
 @Entity
-@Table(name = "tb_association")
+@Table(name = "tb_project")
 public class Project extends AuditModel {
 
     private static final long serialVersionUID = 1L;
@@ -35,7 +35,7 @@ public class Project extends AuditModel {
     @NotNull
     @Column(name = "start_date", nullable = false)
     @ApiModelProperty(notes = "Start Date")
-    private LocalDateTime start_date;
+    private LocalDateTime startDate;
 
     @NotNull
     @Column(name = "end_date", nullable = false)
@@ -58,4 +58,19 @@ public class Project extends AuditModel {
     @ApiModelProperty(value = "Association")
     private Association association;
 
+    public void update(Long id, Project project) {
+        this.id = id;
+        this.name = project.getName();
+        this.shortDescription = project.getShortDescription();
+        this.description = project.getDescription();
+        this.startDate = project.getStartDate();
+        this.foundationDate = project.getFoundationDate();
+        this.email = project.getEmail();
+        this.address = project.getAddress();
+        this.about = project.getAbout();
+        this.online = project.isOnline();
+        this.url = project.getUrl();
+        this.repeat = project.isRepeat();
+        this.association = project.getAssociation();
+    }
 }

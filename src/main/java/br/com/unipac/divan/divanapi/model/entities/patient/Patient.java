@@ -2,6 +2,7 @@ package br.com.unipac.divan.divanapi.model.entities.patient;
 
 
 import br.com.unipac.divan.divanapi.model.domain.AuditModel;
+import br.com.unipac.divan.divanapi.model.entities.association.Association;
 import io.swagger.annotations.ApiModelProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -45,6 +46,12 @@ public class Patient extends AuditModel {
     @JoinColumn(name = "patient_type_id")
     @ApiModelProperty(value = "Patient Type")
     private PatientType patientType;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "association_id")
+    @ApiModelProperty(value = "Patient Type")
+    private Association association;
 
     public void update(Long id, Patient patient) {
         this.id = id;

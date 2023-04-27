@@ -1,10 +1,9 @@
 package br.com.unipac.divan.divanapi.api.dto.request.association.project;
 
-
 import br.com.unipac.divan.divanapi.api.dto.request.association.AssociationRequest;
-import br.com.unipac.divan.divanapi.model.domain.AuditModel;
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Builder
@@ -13,16 +12,14 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @ToString
 @Data
-public class ProjectRequest extends AuditModel {
+public class ProjectRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
     private String name;
     private String shortDescription;
     private String description;
-    private LocalDateTime start_date;
-
+    private LocalDateTime startDate;
     private LocalDateTime foundationDate;
     private String email;
     private String address;
@@ -30,6 +27,6 @@ public class ProjectRequest extends AuditModel {
     private boolean online;
     private String url;
     private boolean repeat;
-    private AssociationRequest association;
+    private Long associationId;
 
 }

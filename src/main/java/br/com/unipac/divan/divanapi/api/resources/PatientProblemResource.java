@@ -1,17 +1,14 @@
 package br.com.unipac.divan.divanapi.api.resources;
 
-
 import br.com.unipac.divan.divanapi.api.dto.request.patient.PatientProblemRequest;
 import br.com.unipac.divan.divanapi.api.dto.response.patient.PatientProblemResponse;
-import br.com.unipac.divan.divanapi.model.domain.AuditModel;
-import br.com.unipac.divan.divanapi.model.entities.patient.Patient;
-import br.com.unipac.divan.divanapi.model.entities.patient.ProblemType;
+import br.com.unipac.divan.divanapi.api.mapper.PatientProblemMapper;
+import br.com.unipac.divan.divanapi.model.entities.patient.PatientProblem;
+import br.com.unipac.divan.divanapi.model.service.PatientProblemService;
 import br.com.unipac.divan.divanapi.util.RestUtils;
 import io.swagger.annotations.*;
-import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,15 +16,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/blocks")
+@RequestMapping("/v1/patient-problems")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Api(value = "PatientProblems")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class PatientProblemResources {
-    private final PatientProblemAdapter blockAdapter;
+public class PatientProblemResource {
+    private final PatientProblemService patientProblemService;
+    private final PatientProblemMapper patientProblemMapper;
 
     /**
      * Gets all.
@@ -44,10 +43,11 @@ public class PatientProblemResources {
     @GetMapping
     @ResponseBody
     public ResponseEntity<List<PatientProblemResponse>> list() {
-        List<PatientProblemResponse> blockResponses = blockAdapter.list();
-        return blockResponses.isEmpty() ?
+        List<PatientProblem> patientProblems = patientProblemService.listAll();
+        List<PatientProblemResponse> patientProblemResponses = patientProblemMapper.map(patientProblems);
+        return patientProblemResponses.isEmpty() ?
                 ResponseEntity.noContent().build() :
-                ResponseEntity.ok(blockResponses);
+                ResponseEntity.ok(patientProblemResponses);
     }
 
     /**
@@ -67,14 +67,19 @@ public class PatientProblemResources {
     @ResponseBody
     @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
     public ResponseEntity<PatientProblemResponse> getById(@PathVariable("id") Long id) {
-        PatientProblemResponse blockResponse = blockAdapter.convertToFindById(id);
-        return ResponseEntity.ok(blockResponse);
+        Optional<PatientProblem> patientProblems = patientProblemService.findById(id);
+        if (patientProblems.isPresent()) {
+            PatientProblemResponse patientProblemResponse = patientProblemMapper.to(patientProblems.get());
+            return ResponseEntity.ok(patientProblemResponse);
+        }
+
+        return ResponseEntity.noContent().build();
     }
 
     /**
      * Add response entity.
      *
-     * @param blockRequest the PatientProblem request
+     * @param patientProblemRequest the PatientProblem request
      * @return the response entity
      */
 
@@ -85,11 +90,14 @@ public class PatientProblemResources {
     })
     @PostMapping
     @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
-    public ResponseEntity<PatientProblemResponse> add(@Valid @RequestBody PatientProblemRequest blockRequest) throws Exception {
-        PatientProblemResponse blockResponse = blockAdapter.convertToCreate(blockRequest);
+    public ResponseEntity<PatientProblemResponse> add(@Valid @RequestBody PatientProblemRequest patientProblemRequest) throws Exception {
+        PatientProblem patientProblem = patientProblemMapper.from(patientProblemRequest);
 
-        URI location = RestUtils.getUri(blockResponse.getId());
-        return ResponseEntity.created(location).body(blockResponse);
+        PatientProblem patientProblemSaved = patientProblemService.save(patientProblem);
+
+        PatientProblemResponse patientProblemResponse = patientProblemMapper.to(patientProblemSaved);
+        URI location = RestUtils.getUri(patientProblemResponse.getId());
+        return ResponseEntity.created(location).body(patientProblemResponse);
     }
 
 
@@ -97,7 +105,7 @@ public class PatientProblemResources {
      * Change response entity.
      *
      * @param id             the id
-     * @param blockRequest the PatientProblem request
+     * @param patientProblemRequest the PatientProblem request
      * @return the response entity
      */
 
@@ -108,10 +116,14 @@ public class PatientProblemResources {
     })
     @PutMapping(path = "/{id}")
     @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
-    public ResponseEntity<PatientProblemResponse> change(@PathVariable("id") Long id, @RequestBody PatientProblemRequest blockRequest) {
-        PatientProblemResponse blockResponse = blockAdapter.convertToChange(id, blockRequest);
-        return blockResponse != null ?
-                ResponseEntity.ok(blockResponse) :
+    public ResponseEntity<PatientProblemResponse> change(@PathVariable("id") Long id, @RequestBody PatientProblemRequest patientProblemRequest) {
+        PatientProblem patientProblem = patientProblemMapper.from(patientProblemRequest);
+
+        PatientProblem patientProblemSaved = patientProblemService.edit(id, patientProblem);
+
+        PatientProblemResponse patientProblemResponse = patientProblemMapper.to(patientProblemSaved);
+        return patientProblemResponse != null ?
+                ResponseEntity.ok(patientProblemResponse) :
                 ResponseEntity.notFound().build();
     }
 
@@ -129,7 +141,7 @@ public class PatientProblemResources {
     @DeleteMapping(path = "/{id}")
     @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
     public ResponseEntity<?> remove(@PathVariable("id") Long id) {
-        boolean removed = blockAdapter.convertToRemove(id);
-        return removed ? ResponseEntity.ok(Constants.DADOS_DELETADOS) : ResponseEntity.notFound().build();
+        boolean removed = patientProblemService.remove(id);
+        return removed ? ResponseEntity.ok("Dados deletados!") : ResponseEntity.notFound().build();
     }
 }

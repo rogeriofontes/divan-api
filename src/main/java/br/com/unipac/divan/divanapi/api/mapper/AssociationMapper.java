@@ -20,7 +20,6 @@ public interface AssociationMapper {
     @Mapping(source = "about", target = "about")
     @Mapping(source = "recurrent", target = "recurrent")
     @Mapping(source = "foundationDate", target = "foundationDate")
-    @Mapping(source = "patientType", target = "patientType")
     Association from(AssociationRequest request);
 
     @InheritInverseConfiguration

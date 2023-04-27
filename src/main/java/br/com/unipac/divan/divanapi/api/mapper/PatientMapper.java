@@ -21,7 +21,8 @@ public interface PatientMapper {
     @Mapping(source = "mobile", target = "mobile")
     @Mapping(source = "address", target = "address")
     @Mapping(source = "recurrent", target = "recurrent")
-    @Mapping(source = "patientType", target = "patientType")
+    @Mapping(source = "patientTypeId", target = "patientType.id")
+    @Mapping(source = "associationId", target = "association.id")
     Patient from(PatientRequest request);
 
     @InheritInverseConfiguration

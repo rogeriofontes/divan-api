@@ -2,6 +2,9 @@ package br.com.unipac.divan.divanapi.api.resources;
 
 import br.com.unipac.divan.divanapi.api.dto.request.association.AssociationSocialMediaRequest;
 import br.com.unipac.divan.divanapi.api.dto.response.association.AssociationSocialMediaResponse;
+import br.com.unipac.divan.divanapi.api.mapper.AssociationSocialMediaMapper;
+import br.com.unipac.divan.divanapi.model.entities.association.AssociationSocialMedia;
+import br.com.unipac.divan.divanapi.model.service.AssociationSocialMediaService;
 import br.com.unipac.divan.divanapi.util.RestUtils;
 import io.swagger.annotations.*;
 import jakarta.validation.Valid;
@@ -13,21 +16,23 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 /**
- * The type AssociationSocialMedia resources.
+ * The type AssociationSocialMediaSocialMedia resources.
  *
  * @author Rogério Fontes
  */
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/associationSocialMedias")
+@RequestMapping("/v1/association-social-medias")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Api(value = "AssociationSocialMedias")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class AssociationSocialMediaResources {
-    private final AssociationSocialMediaAdapter associationSocialMediaAdapter;
+public class AssociationSocialMediaResource {
+    private final AssociationSocialMediaService associationService;
+    private final AssociationSocialMediaMapper associationMapper;
 
     /**
      * Gets all.
@@ -44,10 +49,11 @@ public class AssociationSocialMediaResources {
     @GetMapping
     @ResponseBody
     public ResponseEntity<List<AssociationSocialMediaResponse>> list() {
-        List<AssociationSocialMediaResponse> associationSocialMediaResponses = associationSocialMediaAdapter.list();
-        return associationSocialMediaResponses.isEmpty() ?
+        List<AssociationSocialMedia> associations = associationService.listAll();
+        List<AssociationSocialMediaResponse> associationResponses = associationMapper.map(associations);
+        return associationResponses.isEmpty() ?
                 ResponseEntity.noContent().build() :
-                ResponseEntity.ok(associationSocialMediaResponses);
+                ResponseEntity.ok(associationResponses);
     }
 
     /**
@@ -67,14 +73,19 @@ public class AssociationSocialMediaResources {
     @ResponseBody
     @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
     public ResponseEntity<AssociationSocialMediaResponse> getById(@PathVariable("id") Long id) {
-        AssociationSocialMediaResponse associationSocialMediaResponse = associationSocialMediaAdapter.convertToFindById(id);
-        return ResponseEntity.ok(associationSocialMediaResponse);
+        Optional<AssociationSocialMedia> associations = associationService.findById(id);
+        if (associations.isPresent()) {
+            AssociationSocialMediaResponse associationResponse = associationMapper.to(associations.get());
+            return ResponseEntity.ok(associationResponse);
+        }
+
+        return ResponseEntity.noContent().build();
     }
 
     /**
      * Add response entity.
      *
-     * @param associationSocialMediaRequest the AssociationSocialMedia request
+     * @param associationRequest the AssociationSocialMedia request
      * @return the response entity
      */
 
@@ -85,11 +96,14 @@ public class AssociationSocialMediaResources {
     })
     @PostMapping
     @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
-    public ResponseEntity<AssociationSocialMediaResponse> add(@Valid @RequestBody AssociationSocialMediaRequest associationSocialMediaRequest) throws Exception {
-        AssociationSocialMediaResponse associationSocialMediaResponse = associationSocialMediaAdapter.convertToCreate(associationSocialMediaRequest);
+    public ResponseEntity<AssociationSocialMediaResponse> add(@Valid @RequestBody AssociationSocialMediaRequest associationRequest) throws Exception {
+        AssociationSocialMedia association = associationMapper.from(associationRequest);
 
-        URI location = RestUtils.getUri(associationSocialMediaResponse.getId());
-        return ResponseEntity.created(location).body(associationSocialMediaResponse);
+        AssociationSocialMedia associationSaved = associationService.save(association);
+
+        AssociationSocialMediaResponse associationResponse = associationMapper.to(associationSaved);
+        URI location = RestUtils.getUri(associationResponse.getId());
+        return ResponseEntity.created(location).body(associationResponse);
     }
 
 
@@ -97,7 +111,7 @@ public class AssociationSocialMediaResources {
      * Change response entity.
      *
      * @param id             the id
-     * @param associationSocialMediaRequest the AssociationSocialMedia request
+     * @param associationRequest the AssociationSocialMedia request
      * @return the response entity
      */
 
@@ -108,10 +122,14 @@ public class AssociationSocialMediaResources {
     })
     @PutMapping(path = "/{id}")
     @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
-    public ResponseEntity<AssociationSocialMediaResponse> change(@PathVariable("id") Long id, @RequestBody AssociationSocialMediaRequest associationSocialMediaRequest) {
-        AssociationSocialMediaResponse associationSocialMediaResponse = associationSocialMediaAdapter.convertToChange(id, associationSocialMediaRequest);
-        return associationSocialMediaResponse != null ?
-                ResponseEntity.ok(associationSocialMediaResponse) :
+    public ResponseEntity<AssociationSocialMediaResponse> change(@PathVariable("id") Long id, @RequestBody AssociationSocialMediaRequest associationRequest) {
+        AssociationSocialMedia association = associationMapper.from(associationRequest);
+
+        AssociationSocialMedia associationSaved = associationService.edit(id, association);
+
+        AssociationSocialMediaResponse associationResponse = associationMapper.to(associationSaved);
+        return associationResponse != null ?
+                ResponseEntity.ok(associationResponse) :
                 ResponseEntity.notFound().build();
     }
 
@@ -129,7 +147,7 @@ public class AssociationSocialMediaResources {
     @DeleteMapping(path = "/{id}")
     @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
     public ResponseEntity<?> remove(@PathVariable("id") Long id) {
-        boolean removed = associationSocialMediaAdapter.convertToRemove(id);
-        return removed ? ResponseEntity.ok(Constants.DADOS_DELETADOS) : ResponseEntity.notFound().build();
+        boolean removed = associationService.remove(id);
+        return removed ? ResponseEntity.ok("Dados deletados!") : ResponseEntity.notFound().build();
     }
 }

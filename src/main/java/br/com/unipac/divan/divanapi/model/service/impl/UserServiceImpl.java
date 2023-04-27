@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
      * @param email the email
      * @return the optional
      */
-    @Autowired
+    @Override
     public Optional<User> findByEmail(String email){
         return userRepository.findByEmail(email);
     }

@@ -1,14 +1,17 @@
 package br.com.unipac.divan.divanapi.model.entities.association;
 
 
+import br.com.unipac.divan.divanapi.constants.Constants;
 import br.com.unipac.divan.divanapi.model.domain.AuditModel;
 import br.com.unipac.divan.divanapi.model.entities.patient.PatientType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -37,13 +40,9 @@ public class Association extends AuditModel {
     @NotNull
     @Column(name = "foundation_date", nullable = false)
     @ApiModelProperty(notes = "Foundation Date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.BRAZILIAN_DATE)
+    @DateTimeFormat(pattern = Constants.BRAZILIAN_DATE)
     private LocalDateTime foundationDate;
-
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "patient_type_id")
-    @ApiModelProperty(value = "Patient Type")
-    private PatientType patientType;
 
     public void update(Long id, Association association) {
         this.id = id;
@@ -53,7 +52,6 @@ public class Association extends AuditModel {
         this.about = association.getAbout();
         this.recurrent = association.isRecurrent();
         this.foundationDate = association.getFoundationDate();
-        this.patientType = association.getPatientType();
     }
     //user_account
 }

@@ -15,7 +15,7 @@ import lombok.*;
 @ToString
 @Data
 @Entity
-@Table(name = "tb_patient")
+@Table(name = "tb_psychological")
 public class Psychological extends AuditModel {
 
     private static final long serialVersionUID = 1L;
@@ -26,7 +26,7 @@ public class Psychological extends AuditModel {
     private Long id;
 
     @Column(name = "fist_name")
-    private String firtName;
+    private String firstName;
 
     @Column(name = "last_name")
     private String lastName;
@@ -53,7 +53,7 @@ public class Psychological extends AuditModel {
 
     public void update(Long id, Psychological psychological) {
         this.id = id;
-        this.firtName = psychological.getFirtName();
+        this.firstName = psychological.getFirstName();
         this.lastName = psychological.getLastName();
         this.email = psychological.getEmail();
         this.phone = psychological.getPhone();

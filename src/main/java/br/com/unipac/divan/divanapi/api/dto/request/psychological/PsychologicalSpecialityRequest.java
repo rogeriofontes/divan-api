@@ -1,9 +1,8 @@
 package br.com.unipac.divan.divanapi.api.dto.request.psychological;
 
-
-import br.com.unipac.divan.divanapi.model.domain.AuditModel;
-import jakarta.persistence.*;
 import lombok.*;
+
+import java.io.Serializable;
 
 @Builder
 @NoArgsConstructor
@@ -11,20 +10,9 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 @Data
-@Entity
-@Table(name = "tb_psychological_speciality")
-public class PsychologicalSpecialityRequest extends AuditModel {
+public class PsychologicalSpecialityRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private Long id;
     private String description;
-
-    public void update(Long id, PsychologicalSpecialityRequest psychologicalSpeciality) {
-        this.id = id;
-        this.description = psychologicalSpeciality.getDescription();
-    }
 }

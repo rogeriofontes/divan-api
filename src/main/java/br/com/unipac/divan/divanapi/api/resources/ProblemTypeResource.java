@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/problemTypes")
+@RequestMapping("/v1/problem-types")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Api(value = "ProblemTypes")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

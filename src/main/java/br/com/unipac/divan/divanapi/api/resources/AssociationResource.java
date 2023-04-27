@@ -1,6 +1,5 @@
 package br.com.unipac.divan.divanapi.api.resources;
 
-
 import br.com.unipac.divan.divanapi.api.dto.request.association.AssociationRequest;
 import br.com.unipac.divan.divanapi.api.dto.response.association.AssociationResponse;
 import br.com.unipac.divan.divanapi.api.mapper.AssociationMapper;

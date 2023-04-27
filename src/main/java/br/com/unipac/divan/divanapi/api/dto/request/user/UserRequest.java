@@ -1,15 +1,10 @@
 package br.com.unipac.divan.divanapi.api.dto.request.user;
 
-import br.com.unipac.divan.divanapi.model.domain.AuditModel;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -24,19 +19,8 @@ import java.util.Set;
 //@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString
-@Entity
-@Table(name = "tb_user")
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonTypeName(value = "tb_user")
-@ApiModel(value = "User", description = "Model")
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class UserRequest extends AuditModel  { //implements UserDetails
+public class UserRequest implements Serializable {
     private static final long serialVersionUID = 3305563921155141378L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private Long id;
 
     @NotNull(message = "O campo \"name\" é obrigatório")
     @ApiModelProperty(notes = "name")
@@ -50,30 +34,23 @@ public class UserRequest extends AuditModel  { //implements UserDetails
     @ApiModelProperty(notes = "password")
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "tb_user_profile", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "profile_id"))
     @ApiModelProperty(notes = "profiles")
     private Set<ProfileRequest> profiles;
 
     @NotNull
-    @Column(name = "last_access", nullable = false)
     private LocalDateTime lastAccess;
 
     @NotNull
-    @Column(name = "social_id", nullable = false)
     private Long socialId;
 
     @NotNull
-    @Column(name = "social_type", nullable = false)
     private String socialType;
 
     @NotNull
-    @Column(name = "register_number", nullable = false)
     private String registerNumber;
 
     @Builder
-    public UserRequest(Long id, String name, String email, String password, Set<ProfileRequest> profiles, LocalDateTime lastAccess, Long socialId, String socialType, String registerNumber) {
-        this.setId(id);
+    public UserRequest(String name, String email, String password, Set<ProfileRequest> profiles, LocalDateTime lastAccess, Long socialId, String socialType, String registerNumber) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -82,19 +59,5 @@ public class UserRequest extends AuditModel  { //implements UserDetails
         this.socialId = socialId;
         this.socialType = socialType;
         this.registerNumber = registerNumber;
-    }
-
-    /**
-     * Update.
-     *
-     * @param id   the id
-     * @param user the user
-     */
-    public void update(Long id, UserRequest user) {
-        this .setId(id);
-        this.setName(user.getName());
-        this.setEmail(user.getEmail());
-        this.setSocialId(user.getSocialId());
-        this.setPassword(user.getPassword());
     }
 }

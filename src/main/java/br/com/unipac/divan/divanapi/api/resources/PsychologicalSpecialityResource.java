@@ -1,7 +1,11 @@
 package br.com.unipac.divan.divanapi.api.resources;
 
 import br.com.unipac.divan.divanapi.api.dto.request.psychological.PsychologicalSpecialityRequest;
+import br.com.unipac.divan.divanapi.api.dto.response.psychological.PsychologicalResponse;
 import br.com.unipac.divan.divanapi.api.dto.response.psychological.PsychologicalSpecialityResponse;
+import br.com.unipac.divan.divanapi.api.mapper.PsychologicalSpecialityMapper;
+import br.com.unipac.divan.divanapi.model.entities.psychological.PsychologicalSpeciality;
+import br.com.unipac.divan.divanapi.model.service.PsychologicalSpecialityService;
 import br.com.unipac.divan.divanapi.util.RestUtils;
 import io.swagger.annotations.*;
 import jakarta.validation.Valid;
@@ -13,15 +17,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/blocks")
+@RequestMapping("/v1/psychological-specialities")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Api(value = "PsychologicalSpecialitys")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class PsychologicalSpecialityResources {
-    private final PsychologicalSpecialityAdapter blockAdapter;
+public class PsychologicalSpecialityResource {
+    private final PsychologicalSpecialityService psychologicalSpecialityService;
+    private final PsychologicalSpecialityMapper psychologicalSpecialityMapper;
 
     /**
      * Gets all.
@@ -38,10 +44,11 @@ public class PsychologicalSpecialityResources {
     @GetMapping
     @ResponseBody
     public ResponseEntity<List<PsychologicalSpecialityResponse>> list() {
-        List<PsychologicalSpecialityResponse> blockResponses = blockAdapter.list();
-        return blockResponses.isEmpty() ?
+        List<PsychologicalSpeciality> psychologicalSpecialities = psychologicalSpecialityService.listAll();
+        List<PsychologicalSpecialityResponse> psychologicalResponses = psychologicalSpecialityMapper.map(psychologicalSpecialities);
+        return psychologicalResponses.isEmpty() ?
                 ResponseEntity.noContent().build() :
-                ResponseEntity.ok(blockResponses);
+                ResponseEntity.ok(psychologicalResponses);
     }
 
     /**
@@ -61,14 +68,19 @@ public class PsychologicalSpecialityResources {
     @ResponseBody
     @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
     public ResponseEntity<PsychologicalSpecialityResponse> getById(@PathVariable("id") Long id) {
-        PsychologicalSpecialityResponse blockResponse = blockAdapter.convertToFindById(id);
-        return ResponseEntity.ok(blockResponse);
+        Optional<PsychologicalSpeciality> problemTypes = psychologicalSpecialityService.findById(id);
+        if (problemTypes.isPresent()) {
+            PsychologicalSpecialityResponse problemTypeResponse = psychologicalSpecialityMapper.to(problemTypes.get());
+            return ResponseEntity.ok(problemTypeResponse);
+        }
+
+        return ResponseEntity.noContent().build();
     }
 
     /**
      * Add response entity.
      *
-     * @param blockRequest the PsychologicalSpeciality request
+     * @param problemTypeRequest the PsychologicalSpeciality request
      * @return the response entity
      */
 
@@ -79,11 +91,14 @@ public class PsychologicalSpecialityResources {
     })
     @PostMapping
     @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
-    public ResponseEntity<PsychologicalSpecialityResponse> add(@Valid @RequestBody PsychologicalSpecialityRequest blockRequest) throws Exception {
-        PsychologicalSpecialityResponse blockResponse = blockAdapter.convertToCreate(blockRequest);
+    public ResponseEntity<PsychologicalSpecialityResponse> add(@Valid @RequestBody PsychologicalSpecialityRequest problemTypeRequest) throws Exception {
+        PsychologicalSpeciality problemType = psychologicalSpecialityMapper.from(problemTypeRequest);
 
-        URI location = RestUtils.getUri(blockResponse.getId());
-        return ResponseEntity.created(location).body(blockResponse);
+        PsychologicalSpeciality problemTypeSaved = psychologicalSpecialityService.save(problemType);
+
+        PsychologicalSpecialityResponse problemTypeResponse = psychologicalSpecialityMapper.to(problemTypeSaved);
+        URI location = RestUtils.getUri(problemTypeResponse.getId());
+        return ResponseEntity.created(location).body(problemTypeResponse);
     }
 
 
@@ -91,7 +106,7 @@ public class PsychologicalSpecialityResources {
      * Change response entity.
      *
      * @param id             the id
-     * @param blockRequest the PsychologicalSpeciality request
+     * @param problemTypeRequest the PsychologicalSpeciality request
      * @return the response entity
      */
 
@@ -102,10 +117,14 @@ public class PsychologicalSpecialityResources {
     })
     @PutMapping(path = "/{id}")
     @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
-    public ResponseEntity<PsychologicalSpecialityResponse> change(@PathVariable("id") Long id, @RequestBody PsychologicalSpecialityRequest blockRequest) {
-        PsychologicalSpecialityResponse blockResponse = blockAdapter.convertToChange(id, blockRequest);
-        return blockResponse != null ?
-                ResponseEntity.ok(blockResponse) :
+    public ResponseEntity<PsychologicalSpecialityResponse> change(@PathVariable("id") Long id, @RequestBody PsychologicalSpecialityRequest problemTypeRequest) {
+        PsychologicalSpeciality problemType = psychologicalSpecialityMapper.from(problemTypeRequest);
+
+        PsychologicalSpeciality problemTypeSaved = psychologicalSpecialityService.edit(id, problemType);
+
+        PsychologicalSpecialityResponse problemTypeResponse = psychologicalSpecialityMapper.to(problemTypeSaved);
+        return problemTypeResponse != null ?
+                ResponseEntity.ok(problemTypeResponse) :
                 ResponseEntity.notFound().build();
     }
 
@@ -123,7 +142,7 @@ public class PsychologicalSpecialityResources {
     @DeleteMapping(path = "/{id}")
     @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
     public ResponseEntity<?> remove(@PathVariable("id") Long id) {
-        boolean removed = blockAdapter.convertToRemove(id);
-        return removed ? ResponseEntity.ok(Constants.DADOS_DELETADOS) : ResponseEntity.notFound().build();
+        boolean removed = psychologicalSpecialityService.remove(id);
+        return removed ? ResponseEntity.ok("Dados deletados!") : ResponseEntity.notFound().build();
     }
 }

@@ -1,9 +1,8 @@
 package br.com.unipac.divan.divanapi.api.dto.response.association;
 
-import br.com.unipac.divan.divanapi.model.domain.AuditModel;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import lombok.*;
+
+import java.io.Serializable;
 
 @Builder
 @NoArgsConstructor
@@ -11,9 +10,7 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 @Data
-@Entity
-@Table(name = "tb_association_social_media")
-public class AssociationSocialMediaResponse extends AuditModel {
+public class AssociationSocialMediaResponse implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

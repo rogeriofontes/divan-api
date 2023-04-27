@@ -10,6 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -24,51 +25,28 @@ import java.util.Set;
 //@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString
-@Entity
-@Table(name = "tb_user")
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonTypeName(value = "tb_user")
-@ApiModel(value = "User", description = "Model")
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class UserResponse extends AuditModel  { //implements UserDetails
+public class UserResponse implements Serializable {
     private static final long serialVersionUID = 3305563921155141378L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
     private Long id;
-
     @NotNull(message = "O campo \"name\" é obrigatório")
     @ApiModelProperty(notes = "name")
     private String name;
-
     @NotNull(message = "O campo \"email\" é obrigatório")
     @ApiModelProperty(notes = "email")
     private String email;
-
     @NotNull
     @ApiModelProperty(notes = "password")
     private String password;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "tb_user_profile", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "profile_id"))
     @ApiModelProperty(notes = "profiles")
     private Set<ProfileResponse> profiles;
-
     @NotNull
-    @Column(name = "last_access", nullable = false)
     private LocalDateTime lastAccess;
-
     @NotNull
-    @Column(name = "social_id", nullable = false)
     private Long socialId;
-
     @NotNull
-    @Column(name = "social_type", nullable = false)
     private String socialType;
-
     @NotNull
-    @Column(name = "register_number", nullable = false)
     private String registerNumber;
 
     @Builder
@@ -82,19 +60,5 @@ public class UserResponse extends AuditModel  { //implements UserDetails
         this.socialId = socialId;
         this.socialType = socialType;
         this.registerNumber = registerNumber;
-    }
-
-    /**
-     * Update.
-     *
-     * @param id   the id
-     * @param user the user
-     */
-    public void update(Long id, UserResponse user) {
-        this .setId(id);
-        this.setName(user.getName());
-        this.setEmail(user.getEmail());
-        this.setSocialId(user.getSocialId());
-        this.setPassword(user.getPassword());
     }
 }

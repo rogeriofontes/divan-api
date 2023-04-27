@@ -1,0 +1,1142 @@
+{
+	"info": {
+		"_postman_id": "8b1621e5-12e9-4883-893d-d093e370324c",
+		"name": "divan-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "associations",
+			"item": [
+				{
+					"name": "http://localhost:5665/v1/associations",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Psicóloga Clínica Isabel I7\",\n    \"email\": \"isabel2@gmail.com\",\n    \"address\": \"Av. Floriano Peixoto, 615 - Sala 302 - Centro, Uberlândia - MG, 38010-050\",\n    \"about\": \"ABRAPSO profissionais e estudantes que estejam contribuindo para o desenvolvimento da Psicologia Social no Brasil\",\n    \"recurrent\": true,\n    \"foundationDate\": \"13/09/2022 14:31:34\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/associations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"associations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/associations Copy 2",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Psicóloga Clínica Isabel I9\",\n    \"email\": \"isabel2@gmail.com\",\n    \"address\": \"Av. Floriano Peixoto, 615 - Sala 302 - Centro, Uberlândia - MG, 38010-050\",\n    \"about\": \"ABRAPSO profissionais e estudantes que estejam contribuindo para o desenvolvimento da Psicologia Social no Brasil\",\n    \"recurrent\": true,\n    \"foundationDate\": \"13/09/2022 14:31:34\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/associations/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"associations",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/associations Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/associations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"associations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/associations/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/associations/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"associations",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/associations/1 Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/associations/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"associations",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "association-social-medias",
+			"item": [
+				{
+					"name": "http://localhost:5665/v1/association-social-medias",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"domain\": \"princesaisabel\",\n    \"link\": \"www.princesaisabel.com.br\",\n    \"logo\": \"\",\n    \"twitter\": \"@princesaisabel\",\n    \"facebook\": \"princesaisabel\",\n    \"instagram\": \"princesaisabel\",\n    \"associationId\": 1\n}\n\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/association-social-medias",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"association-social-medias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/association-social-medias/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"domain\": \"princesaisabel\",\n    \"link\": \"www.princesaisabel.com.br\",\n    \"logo\": \"\",\n    \"twitter\": \"@princesaisabel\",\n    \"facebook\": \"princesaisabel\",\n    \"instagram\": \"princesaisabel\",\n    \"associationId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/association-social-medias/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"association-social-medias",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/association-social-medias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/association-social-medias",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"association-social-medias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/association-social-medias/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/association-social-medias/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"association-social-medias",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/association-social-medias/1",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/association-social-medias/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"association-social-medias",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "patient-types",
+			"item": [
+				{
+					"name": "http://localhost:5665/v1/patient-types",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"hipocondríaco\"\n}\n\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/patient-types",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"patient-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/patient-types/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"hipocondríaco\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/patient-types/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"patient-types",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/patient-types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/patient-types",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"patient-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/patient-types/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/patient-types/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"patient-types",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/patient-types/1",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/patient-types/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"patient-types",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "problem-types",
+			"item": [
+				{
+					"name": "http://localhost:5665/v1/problem-types",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"hipocondríaco\"\n}\n\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/problem-types",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"problem-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/problem-types/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"hipocondríaco\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1problem-types/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1problem-types",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/problem-types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/problem-types",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"problem-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/problem-types/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/problem-typess/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"problem-typess",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/problem-types/1",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/problem-typess/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"problem-typess",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "psychological-specialities",
+			"item": [
+				{
+					"name": "http://localhost:5665/v1/psychological-specialities",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"hipocondríaco\"\n}\n\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/psychological-specialities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"psychological-specialities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/psychological-specialities/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"hipocondríaco\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/psychological-specialities/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"psychological-specialities",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/psychological-specialities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/psychological-specialities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"psychological-specialities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/psychological-specialities/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/psychological-specialities/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"psychological-specialities",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/psychological-specialities/1",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/psychological-specialities/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"psychological-specialities",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "psychologicals",
+			"item": [
+				{
+					"name": "http://localhost:5665/v1/psychologicals",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"hipocondríaco\",\n    \"lastName\": \"hipocondríaco\",\n    \"email\": \"hipocondríaco\",\n    \"phone\": \"hipocondríaco\",\n    \"mobile\": \"hipocondríaco\",\n    \"address\": \"hipocondríaco\",\n    \"associationId\": 1,\n    \"psychologicalSpecialityId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/psychologicals",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"psychologicals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/psychologicals/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"hipocondríaco\",\n    \"lastName\": \"hipocondríaco\",\n    \"email\": \"hipocondríaco\",\n    \"phone\": \"hipocondríaco\",\n    \"mobile\": \"hipocondríaco\",\n    \"address\": \"hipocondríaco\",\n    \"associationId\": 1,\n    \"psychologicalSpecialityId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/psychologicals/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"psychologicals",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/psychologicals",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/psychologicals",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"psychologicals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/psychologicals/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/psychologicals/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"psychologicals",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/psychologicals/1",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/psychologicals/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"psychologicals",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "patient-problems",
+			"item": [
+				{
+					"name": "http://localhost:5665/v1/patient-problems",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"hipocondríaco\",\n    \"patientId\": 1,\n    \"problemTypeId\": 1,\n    \"evolved\": true\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/patient-problems",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"patient-problems"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/patient-problems/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"hipocondríaco\",\n    \"patientId\": 1,\n    \"problemTypeId\": 1,\n    \"evolved\": true\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/patient-problems/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"patient-problems",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/patient-problems",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/patient-problems",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"patient-problems"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/patient-problems/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/patient-problems/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"patient-problems",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/patient-problems/1",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/patient-problems/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"patient-problems",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "patients",
+			"item": [
+				{
+					"name": "http://localhost:5665/v1/patients",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firtName\": \"Rogerio\",\n    \"lastName\": \"Fontes\",\n    \"email\": \"rogeriofontes@gmail.com\",\n    \"phone\": \"21312312312312\",\n    \"mobile\": \"2312312312\",\n    \"address\": \"vsdavsadvsdvsdvsadva\",\n    \"recurrent\": true,\n    \"patientTypeId\": 1,\n    \"associationId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/patients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"patients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/patients/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"hipocondríaco\",\n    \"patientId\": 1,\n    \"problemTypeId\": 1,\n    \"evolved\": true\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/patients/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"patients",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/patients",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/patients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"patients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/patients/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/patients/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"patients",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/patient-problems/1",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/patients/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"patients",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "projects",
+			"item": [
+				{
+					"name": "http://localhost:5665/v1/projects",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Rogerio\",\n    \"shortDescription\": \"Fontes\",\n    \"description\": \"rogeriofontes@gmail.com\",\n    \"startDate\": \"21312312312312\",\n    \"foundationDate\": \"2312312312\",\n    \"email\": \"\",\n    \"address\": \"vsdavsadvsdvsdvsadva\",\n    \"about\": \"\",\n    \"online\": true,\n    \"url\": \"\",\n    \"repeat\": true,\n    \"associationId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/projects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/projects/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Rogerio\",\n    \"shortDescription\": \"Fontes\",\n    \"description\": \"rogeriofontes@gmail.com\",\n    \"startDate\": \"21312312312312\",\n    \"foundationDate\": \"2312312312\",\n    \"email\": \"\",\n    \"address\": \"vsdavsadvsdvsdvsadva\",\n    \"about\": \"\",\n    \"online\": true,\n    \"url\": \"\",\n    \"repeat\": true,\n    \"associationId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/projects/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"projects",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/projects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/projects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/projects/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/projects/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"projects",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/projects/1",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/projects/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"projects",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -9,6 +9,5 @@ import org.springframework.stereotype.Repository;
  *
  * @author Rogério Fontes
  */
-@Repository
 public interface PsychologicalService extends BaseService<Psychological, Long> {
 }

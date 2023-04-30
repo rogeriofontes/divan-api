@@ -10,7 +10,6 @@ import java.util.Optional;
  *
  * @author Rogério Fontes
  */
-@Repository
 public interface UserService extends BaseService<User, Long> {
     /**
      * Find by email optional.

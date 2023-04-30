@@ -1,6 +1,5 @@
 package br.com.unipac.divan.divanapi.model.service.impl;
 
-import br.com.unipac.divan.divanapi.model.entities.patient.PatientType;
 import br.com.unipac.divan.divanapi.model.entities.patient.ProblemType;
 import br.com.unipac.divan.divanapi.model.repositories.ProblemTypeRepository;
 import br.com.unipac.divan.divanapi.model.service.ProblemTypeService;

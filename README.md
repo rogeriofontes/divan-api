@@ -18,3 +18,5 @@ http://localhost:5665/divan-openapi
 
 http://localhost:5665/swagger-ui/index.html#/
 https://1kevinson.com/document-a-springbootrest-api-with-swagger-and-open-api/
+
+https://springdoc.org/#getting-started

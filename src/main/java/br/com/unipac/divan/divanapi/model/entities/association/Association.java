@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(name = "tb_association")
-@Schema(description = "Association object")
+@Schema(name = "Association", description = "Association object")
 public class Association extends AuditModel {
 
     private static final long serialVersionUID = 1L;

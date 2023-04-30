@@ -1,6 +1,5 @@
 package br.com.unipac.divan.divanapi.model.service.impl;
 
-import br.com.unipac.divan.divanapi.model.entities.patient.Patient;
 import br.com.unipac.divan.divanapi.model.entities.psychological.PsychologicalCompany;
 import br.com.unipac.divan.divanapi.model.repositories.PsychologicalCompanyRepository;
 import br.com.unipac.divan.divanapi.model.service.PsychologicalCompanyService;

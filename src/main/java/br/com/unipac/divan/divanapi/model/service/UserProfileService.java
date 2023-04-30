@@ -12,8 +12,6 @@ import java.util.List;
  *
  * @author Rogério Fontes
  */
-@Repository
-@Qualifier(value = "userProfileRepository")
 public interface UserProfileService extends BaseService<Profile, Long> {
     /**
      * Find by role list.

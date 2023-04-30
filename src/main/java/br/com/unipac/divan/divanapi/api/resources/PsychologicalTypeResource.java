@@ -25,7 +25,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/psychological-specialities")
+@RequestMapping("/v1/psychological-types")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Tag(name = "PsychologicalTypeResource", description = "PsychologicalTypeResource management APIs")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

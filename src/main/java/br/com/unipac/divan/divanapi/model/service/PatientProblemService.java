@@ -8,6 +8,5 @@ import org.springframework.stereotype.Repository;
  *
  * @author Rogério Fontes
  */
-@Repository
 public interface PatientProblemService extends BaseService<PatientProblem, Long> {
 }

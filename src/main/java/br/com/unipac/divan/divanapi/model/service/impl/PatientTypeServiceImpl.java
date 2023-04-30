@@ -1,14 +1,11 @@
 package br.com.unipac.divan.divanapi.model.service.impl;
 
-import br.com.unipac.divan.divanapi.model.entities.patient.Patient;
 import br.com.unipac.divan.divanapi.model.entities.patient.PatientType;
 import br.com.unipac.divan.divanapi.model.repositories.PatientTypeRepository;
-import br.com.unipac.divan.divanapi.model.service.BaseService;
 import br.com.unipac.divan.divanapi.model.service.PatientTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

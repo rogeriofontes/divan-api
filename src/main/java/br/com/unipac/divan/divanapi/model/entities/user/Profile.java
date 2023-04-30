@@ -3,8 +3,7 @@ package br.com.unipac.divan.divanapi.model.entities.user;
 import br.com.unipac.divan.divanapi.model.domain.AuditModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Cache;
@@ -25,17 +24,20 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Table(name = "tb_profile")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @JsonTypeName(value = "tb_profile")
-@ApiModel(value = "Profile", description = "Model")
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Schema(description = "Patient object")
 public class Profile extends AuditModel {
     private static final long serialVersionUID = -1483351163120427247L;
 
+    @Schema(description = "Unique identifier of the Patient.",
+            example = "1", required = true)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
 
-    @ApiModelProperty(notes = "role")
+    @Schema(description = "Role of the Profile.",
+            example = "basic_user", required = true)
     private String role;
 
     /**

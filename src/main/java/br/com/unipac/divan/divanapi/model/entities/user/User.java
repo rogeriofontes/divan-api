@@ -3,9 +3,9 @@ package br.com.unipac.divan.divanapi.model.entities.user;
 import br.com.unipac.divan.divanapi.model.domain.AuditModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -28,60 +28,54 @@ import java.util.Set;
 @Table(name = "tb_user")
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @JsonTypeName(value = "tb_user")
-@ApiModel(value = "User", description = "Model")
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Schema(description = "Patient object")
 public class User extends AuditModel  { //implements UserDetails
     private static final long serialVersionUID = 3305563921155141378L;
 
+    @Schema(description = "Unique identifier of the Patient.",
+            example = "1", required = true)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
 
+    @Schema(description = "Name of the User.",
+            example = "Jessica Abigail", required = true)
     @NotNull(message = "O campo \"name\" é obrigatório")
-    @ApiModelProperty(notes = "name")
     private String name;
 
+    @Schema(description = "Email address of the User.",
+            example = "jessica@ngilang.com", required = true)
     @NotNull(message = "O campo \"email\" é obrigatório")
-    @ApiModelProperty(notes = "email")
     private String email;
 
+    @Schema(description = "Password address of the User.",
+            example = "*******", required = true)
     @NotNull
-    @ApiModelProperty(notes = "password")
     private String password;
 
+    @Schema(description = "profiles of the User.",
+            example = "Jessica Abigail User", required = false, ref = "Association")
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "tb_user_profile", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "profile_id"))
-    @ApiModelProperty(notes = "profiles")
     private Set<Profile> profiles;
 
+    @Schema(description = "Last Access address of the User.",
+            example = "jessica@ngilang.com", required = true)
+    @Email(message = "Email Address")
     @NotNull
     @Column(name = "last_access", nullable = false)
     private LocalDateTime lastAccess;
 
-    @NotNull
-    @Column(name = "social_id", nullable = false)
-    private Long socialId;
-
-    @NotNull
-    @Column(name = "social_type", nullable = false)
-    private String socialType;
-
-    @NotNull
-    @Column(name = "register_number", nullable = false)
-    private String registerNumber;
-
     @Builder
-    public User(Long id, String name, String email, String password, Set<Profile> profiles, LocalDateTime lastAccess, Long socialId, String socialType, String registerNumber) {
+    public User(Long id, String name, String email, String password, Set<Profile> profiles, LocalDateTime lastAccess) {
         this.setId(id);
         this.name = name;
         this.email = email;
         this.password = password;
         this.profiles = profiles;
         this.lastAccess = lastAccess;
-        this.socialId = socialId;
-        this.socialType = socialType;
-        this.registerNumber = registerNumber;
     }
 
     /**
@@ -94,7 +88,6 @@ public class User extends AuditModel  { //implements UserDetails
         this .setId(id);
         this.setName(user.getName());
         this.setEmail(user.getEmail());
-        this.setSocialId(user.getSocialId());
         this.setPassword(user.getPassword());
     }
 }

@@ -1,14 +1,11 @@
 package br.com.unipac.divan.divanapi.api.dto.response.user;
 
-import br.com.unipac.divan.divanapi.model.domain.AuditModel;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import br.com.unipac.divan.divanapi.model.entities.user.Profile;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -25,40 +22,45 @@ import java.util.Set;
 //@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString
+@Schema(description = "User Response")
 public class UserResponse implements Serializable {
     private static final long serialVersionUID = 3305563921155141378L;
 
+    @Schema(description = "Unique identifier of the Patient.",
+            example = "1", required = true)
     private Long id;
+
+    @Schema(description = "Name of the User.",
+            example = "Jessica Abigail", required = true)
     @NotNull(message = "O campo \"name\" é obrigatório")
-    @ApiModelProperty(notes = "name")
     private String name;
+
+    @Schema(description = "Email address of the User.",
+            example = "jessica@ngilang.com", required = true)
     @NotNull(message = "O campo \"email\" é obrigatório")
-    @ApiModelProperty(notes = "email")
     private String email;
+
+    @Schema(description = "Password address of the User.",
+            example = "*******", required = true)
     @NotNull
-    @ApiModelProperty(notes = "password")
     private String password;
-    @ApiModelProperty(notes = "profiles")
-    private Set<ProfileResponse> profiles;
-    @NotNull
+
+    @Schema(description = "profiles of the User.",
+            example = "Jessica Abigail User", required = false, ref = "Association")
+    private Set<Profile> profiles;
+
+    @Schema(description = "Last Access address of the User.",
+            example = "jessica@ngilang.com", required = true)
+    @Email(message = "Email Address")
     private LocalDateTime lastAccess;
-    @NotNull
-    private Long socialId;
-    @NotNull
-    private String socialType;
-    @NotNull
-    private String registerNumber;
 
     @Builder
-    public UserResponse(Long id, String name, String email, String password, Set<ProfileResponse> profiles, LocalDateTime lastAccess, Long socialId, String socialType, String registerNumber) {
+    public UserResponse(Long id, String name, String email, String password, Set<Profile> profiles, LocalDateTime lastAccess) {
         this.setId(id);
         this.name = name;
         this.email = email;
         this.password = password;
         this.profiles = profiles;
         this.lastAccess = lastAccess;
-        this.socialId = socialId;
-        this.socialType = socialType;
-        this.registerNumber = registerNumber;
     }
 }

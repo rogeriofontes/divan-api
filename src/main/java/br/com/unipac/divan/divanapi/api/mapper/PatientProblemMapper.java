@@ -4,7 +4,11 @@ import br.com.unipac.divan.divanapi.api.dto.request.patient.PatientProblemReques
 import br.com.unipac.divan.divanapi.api.dto.request.patient.PatientRequest;
 import br.com.unipac.divan.divanapi.api.dto.request.patient.ProblemTypeRequest;
 import br.com.unipac.divan.divanapi.api.dto.response.patient.PatientProblemResponse;
+import br.com.unipac.divan.divanapi.model.entities.patient.Patient;
 import br.com.unipac.divan.divanapi.model.entities.patient.PatientProblem;
+import br.com.unipac.divan.divanapi.model.entities.patient.ProblemType;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;

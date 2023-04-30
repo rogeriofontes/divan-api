@@ -6,7 +6,12 @@ import br.com.unipac.divan.divanapi.api.mapper.PatientProblemMapper;
 import br.com.unipac.divan.divanapi.model.entities.patient.PatientProblem;
 import br.com.unipac.divan.divanapi.model.service.PatientProblemService;
 import br.com.unipac.divan.divanapi.util.RestUtils;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +27,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/v1/patient-problems")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@Api(value = "PatientProblems")
+@Tag(name = "PatientProblemResource", description = "PatientProblemResource management APIs")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PatientProblemResource {
     private final PatientProblemService patientProblemService;
@@ -34,12 +39,13 @@ public class PatientProblemResource {
      * @return the all
      */
 
-    @ApiOperation(value = "View a list of available PatientProblem details", response = List.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved Resource of PatientProblem"),
-            @ApiResponse(code = 404, message = "The resource you were looling for is not found")
-    })
-    @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
+    @Operation(summary = "Retrieve all PatientProblems", tags = { "patientProblems", "get", "filter" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = PatientProblemResponse.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "204", description = "There are no Associations", content = {
+                    @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping
     @ResponseBody
     public ResponseEntity<List<PatientProblemResponse>> list() {
@@ -57,15 +63,16 @@ public class PatientProblemResource {
      * @return the response entity
      */
 
-    @ApiOperation(value = "Get PatientProblem details on the basis of account ID", response = ResponseEntity.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved Resource"),
-            @ApiResponse(code = 400, message = "Oops! Account you are looking for does not exist. Try with other PatientProblem ID"),
-            @ApiResponse(code = 404, message = "The resource you were looling for is not found")
-    })
+    @Operation(
+            summary = "Retrieve a PatientProblem by Id",
+            description = "Get a PatientProblem object by specifying its id. The response is Association object with id, title, description and published status.",
+            tags = { "patientProblems", "get" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = PatientProblemResponse.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping(path = "/{id}")
     @ResponseBody
-    @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
     public ResponseEntity<PatientProblemResponse> getById(@PathVariable("id") Long id) {
         Optional<PatientProblem> patientProblems = patientProblemService.findById(id);
         if (patientProblems.isPresent()) {
@@ -83,13 +90,12 @@ public class PatientProblemResource {
      * @return the response entity
      */
 
-    @ApiOperation(value = "Create new PatientProblem", response = ResponseEntity.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved Resource"),
-            @ApiResponse(code = 400, message = "Oops! PatientProblem you are looking for does not exist. Try with other PatientProblem ID")
-    })
+    @Operation(summary = "Create a new PatientProblem", tags = { "patientProblems", "post" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", content = {
+                    @Content(schema = @Schema(implementation = PatientProblemResponse.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @PostMapping
-    @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
     public ResponseEntity<PatientProblemResponse> add(@Valid @RequestBody PatientProblemRequest patientProblemRequest) throws Exception {
         PatientProblem patientProblem = patientProblemMapper.from(patientProblemRequest);
 
@@ -109,13 +115,13 @@ public class PatientProblemResource {
      * @return the response entity
      */
 
-    @ApiOperation(value = "Update existing PatientProblem details on the basis of account ID", response = ResponseEntity.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved Resource"),
-            @ApiResponse(code = 400, message = "Oops! Account you are looking for does not exist. Try with other PatientProblem ID")
-    })
+    @Operation(summary = "Update a PatientProblem by Id", tags = { "patientProblems", "put" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = PatientProblemResponse.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }) })
     @PutMapping(path = "/{id}")
-    @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
     public ResponseEntity<PatientProblemResponse> change(@PathVariable("id") Long id, @RequestBody PatientProblemRequest patientProblemRequest) {
         PatientProblem patientProblem = patientProblemMapper.from(patientProblemRequest);
 
@@ -134,12 +140,10 @@ public class PatientProblemResource {
      * @return the response entity
      */
 
-    @ApiOperation(value = "Delete account on the basis of PatientProblem ID", response = ResponseEntity.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved Resource")
-    })
+    @Operation(summary = "Delete a PatientProblem by Id", tags = { "patientProblems", "delete" })
+    @ApiResponses({ @ApiResponse(responseCode = "204", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @DeleteMapping(path = "/{id}")
-    @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
     public ResponseEntity<?> remove(@PathVariable("id") Long id) {
         boolean removed = patientProblemService.remove(id);
         return removed ? ResponseEntity.ok("Dados deletados!") : ResponseEntity.notFound().build();

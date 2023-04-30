@@ -2,7 +2,10 @@ package br.com.unipac.divan.divanapi.api.mapper;
 
 import br.com.unipac.divan.divanapi.api.dto.request.association.AssociationSocialMediaRequest;
 import br.com.unipac.divan.divanapi.api.dto.response.association.AssociationSocialMediaResponse;
+import br.com.unipac.divan.divanapi.model.entities.association.Association;
 import br.com.unipac.divan.divanapi.model.entities.association.AssociationSocialMedia;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;

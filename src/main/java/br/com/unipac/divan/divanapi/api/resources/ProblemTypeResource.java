@@ -6,7 +6,12 @@ import br.com.unipac.divan.divanapi.api.mapper.ProblemTypeMapper;
 import br.com.unipac.divan.divanapi.model.entities.patient.ProblemType;
 import br.com.unipac.divan.divanapi.model.service.ProblemTypeService;
 import br.com.unipac.divan.divanapi.util.RestUtils;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +27,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/v1/problem-types")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@Api(value = "ProblemTypes")
+@Tag(name = "ProblemTypeResource", description = "ProblemTypeResource management APIs")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ProblemTypeResource {
     private final ProblemTypeService problemTypeService;
@@ -34,12 +39,13 @@ public class ProblemTypeResource {
      * @return the all
      */
 
-    @ApiOperation(value = "View a list of available ProblemType details", response = List.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved Resource of ProblemType"),
-            @ApiResponse(code = 404, message = "The resource you were looling for is not found")
-    })
-    @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
+    @Operation(summary = "Retrieve all ProblemTypes", tags = { "problemTypes", "get", "filter" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = ProblemTypeResponse.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "204", description = "There are no Associations", content = {
+                    @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping
     @ResponseBody
     public ResponseEntity<List<ProblemTypeResponse>> list() {
@@ -57,15 +63,16 @@ public class ProblemTypeResource {
      * @return the response entity
      */
 
-    @ApiOperation(value = "Get ProblemType details on the basis of account ID", response = ResponseEntity.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved Resource"),
-            @ApiResponse(code = 400, message = "Oops! Account you are looking for does not exist. Try with other ProblemType ID"),
-            @ApiResponse(code = 404, message = "The resource you were looling for is not found")
-    })
+    @Operation(
+            summary = "Retrieve a ProblemType by Id",
+            description = "Get a ProblemType object by specifying its id. The response is Association object with id, title, description and published status.",
+            tags = { "problemTypes", "get" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = ProblemTypeResponse.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping(path = "/{id}")
     @ResponseBody
-    @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
     public ResponseEntity<ProblemTypeResponse> getById(@PathVariable("id") Long id) {
         Optional<ProblemType> problemTypes = problemTypeService.findById(id);
         if (problemTypes.isPresent()) {
@@ -83,13 +90,12 @@ public class ProblemTypeResource {
      * @return the response entity
      */
 
-    @ApiOperation(value = "Create new ProblemType", response = ResponseEntity.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved Resource"),
-            @ApiResponse(code = 400, message = "Oops! ProblemType you are looking for does not exist. Try with other ProblemType ID")
-    })
+    @Operation(summary = "Create a new ProblemType", tags = { "problemTypes", "post" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", content = {
+                    @Content(schema = @Schema(implementation = ProblemTypeResponse.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @PostMapping
-    @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
     public ResponseEntity<ProblemTypeResponse> add(@Valid @RequestBody ProblemTypeRequest problemTypeRequest) throws Exception {
         ProblemType problemType = problemTypeMapper.from(problemTypeRequest);
 
@@ -109,13 +115,13 @@ public class ProblemTypeResource {
      * @return the response entity
      */
 
-    @ApiOperation(value = "Update existing ProblemType details on the basis of account ID", response = ResponseEntity.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved Resource"),
-            @ApiResponse(code = 400, message = "Oops! Account you are looking for does not exist. Try with other ProblemType ID")
-    })
+    @Operation(summary = "Update a ProblemType by Id", tags = { "problemTypes", "put" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = ProblemTypeResponse.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }) })
     @PutMapping(path = "/{id}")
-    @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
     public ResponseEntity<ProblemTypeResponse> change(@PathVariable("id") Long id, @RequestBody ProblemTypeRequest problemTypeRequest) {
         ProblemType problemType = problemTypeMapper.from(problemTypeRequest);
 
@@ -134,12 +140,10 @@ public class ProblemTypeResource {
      * @return the response entity
      */
 
-    @ApiOperation(value = "Delete account on the basis of ProblemType ID", response = ResponseEntity.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved Resource")
-    })
+    @Operation(summary = "Delete a ProblemType by Id", tags = { "problemTypes", "delete" })
+    @ApiResponses({ @ApiResponse(responseCode = "204", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @DeleteMapping(path = "/{id}")
-    @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
     public ResponseEntity<?> remove(@PathVariable("id") Long id) {
         boolean removed = problemTypeService.remove(id);
         return removed ? ResponseEntity.ok("Dados deletados!") : ResponseEntity.notFound().build();

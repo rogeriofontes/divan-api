@@ -6,7 +6,12 @@ import br.com.unipac.divan.divanapi.api.mapper.ProjectMapper;
 import br.com.unipac.divan.divanapi.model.entities.association.project.Project;
 import br.com.unipac.divan.divanapi.model.service.ProjectService;
 import br.com.unipac.divan.divanapi.util.RestUtils;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +27,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/v1/projects")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@Api(value = "Projects")
+@Tag(name = "ProjectResource", description = "AssociationResource management APIs")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ProjectResource {
     private final ProjectService problemTypeService;
@@ -34,12 +39,13 @@ public class ProjectResource {
      * @return the all
      */
 
-    @ApiOperation(value = "View a list of available Project details", response = List.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved Resource of Project"),
-            @ApiResponse(code = 404, message = "The resource you were looling for is not found")
-    })
-    @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
+    @Operation(summary = "Retrieve all Projects", tags = { "projects", "get", "filter" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = ProjectResponse.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "204", description = "There are no Associations", content = {
+                    @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping
     @ResponseBody
     public ResponseEntity<List<ProjectResponse>> list() {
@@ -57,15 +63,16 @@ public class ProjectResource {
      * @return the response entity
      */
 
-    @ApiOperation(value = "Get Project details on the basis of account ID", response = ResponseEntity.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved Resource"),
-            @ApiResponse(code = 400, message = "Oops! Account you are looking for does not exist. Try with other Project ID"),
-            @ApiResponse(code = 404, message = "The resource you were looling for is not found")
-    })
+    @Operation(
+            summary = "Retrieve a Project by Id",
+            description = "Get a Projects object by specifying its id. The response is Project object with id, title, description and published status.",
+            tags = { "projects", "get" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = ProjectResponse.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping(path = "/{id}")
     @ResponseBody
-    @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
     public ResponseEntity<ProjectResponse> getById(@PathVariable("id") Long id) {
         Optional<Project> problemTypes = problemTypeService.findById(id);
         if (problemTypes.isPresent()) {
@@ -83,13 +90,12 @@ public class ProjectResource {
      * @return the response entity
      */
 
-    @ApiOperation(value = "Create new Project", response = ResponseEntity.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved Resource"),
-            @ApiResponse(code = 400, message = "Oops! Project you are looking for does not exist. Try with other Project ID")
-    })
+    @Operation(summary = "Create a new Projects", tags = { "projects", "post" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", content = {
+                    @Content(schema = @Schema(implementation = ProjectResponse.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @PostMapping
-    @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
     public ResponseEntity<ProjectResponse> add(@Valid @RequestBody ProjectRequest problemTypeRequest) throws Exception {
         Project problemType = problemTypeMapper.from(problemTypeRequest);
 
@@ -109,13 +115,12 @@ public class ProjectResource {
      * @return the response entity
      */
 
-    @ApiOperation(value = "Update existing Project details on the basis of account ID", response = ResponseEntity.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved Resource"),
-            @ApiResponse(code = 400, message = "Oops! Account you are looking for does not exist. Try with other Project ID")
-    })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = ProjectResponse.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }) })
     @PutMapping(path = "/{id}")
-    @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
     public ResponseEntity<ProjectResponse> change(@PathVariable("id") Long id, @RequestBody ProjectRequest problemTypeRequest) {
         Project problemType = problemTypeMapper.from(problemTypeRequest);
 
@@ -134,12 +139,10 @@ public class ProjectResource {
      * @return the response entity
      */
 
-    @ApiOperation(value = "Delete account on the basis of Project ID", response = ResponseEntity.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved Resource")
-    })
+    @Operation(summary = "Delete a Projects by Id", tags = { "projects", "delete" })
+    @ApiResponses({ @ApiResponse(responseCode = "204", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @DeleteMapping(path = "/{id}")
-    @ApiImplicitParam(name = "Authorization", value = "Baerer token", required = true, dataType = "string", paramType = "header")
     public ResponseEntity<?> remove(@PathVariable("id") Long id) {
         boolean removed = problemTypeService.remove(id);
         return removed ? ResponseEntity.ok("Dados deletados!") : ResponseEntity.notFound().build();

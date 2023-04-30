@@ -15,10 +15,12 @@ public interface AssociationMapper {
 
     @InheritConfiguration
     @Mapping(source = "name", target = "name")
+    @Mapping(source = "phone", target = "phone")
     @Mapping(source = "email", target = "email")
     @Mapping(source = "address", target = "address")
+    @Mapping(source = "postalCode", target = "postalCode")
     @Mapping(source = "about", target = "about")
-    @Mapping(source = "recurrent", target = "recurrent")
+    @Mapping(source = "active", target = "active")
     @Mapping(source = "foundationDate", target = "foundationDate")
     Association from(AssociationRequest request);
 

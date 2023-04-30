@@ -24,6 +24,14 @@ public interface PsychologicalMapper {
     @Mapping(source = "address", target = "address")
     @Mapping(source = "associationId", target = "association.id")
     @Mapping(source = "psychologicalSpecialityId", target = "psychologicalSpeciality.id")
+    @Mapping(source = "gender", target = "gender")
+    @Mapping(source = "documentId", target = "documentId")
+    @Mapping(source = "documentDistrict", target = "documentDistrict")
+    @Mapping(source = "documentDispatchDate", target = "documentDispatchDate")
+    @Mapping(source = "socialId", target = "socialId")
+    @Mapping(source = "socialIdDispatchDate", target = "socialIdDispatchDate")
+    @Mapping(source = "maritalStatus", target = "maritalStatus")
+    @Mapping(source = "mothersName", target = "mothersName")
     Psychological from(PsychologicalRequest request);
 
     @InheritInverseConfiguration

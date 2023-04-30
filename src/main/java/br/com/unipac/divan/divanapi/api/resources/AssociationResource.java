@@ -45,13 +45,15 @@ public class AssociationResource {
      * @return the all
      */
 
-    @Operation(summary = "Retrieve all Tutorials", tags = { "tutorials", "get", "filter" })
+    @Operation(summary = "Retrieve all Associations",
+            description = "Get a Association object by specifying its id. The response is Association object with id, title, description and published status.",
+            tags = { "associations", "get", "filter" })
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {
                     @Content(schema = @Schema(implementation = AssociationResponse.class), mediaType = "application/json") }),
-            @ApiResponse(responseCode = "204", description = "There are no Tutorials", content = {
-                    @Content(schema = @Schema()) }),
-            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
+            @ApiResponse(responseCode = "204", description = "There are no Associations", content = {
+                    @Content(schema = @Schema(implementation = AssociationResponse.class)) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema(implementation = AssociationResponse.class)) }) })
     @GetMapping
     @ResponseBody
     public ResponseEntity<List<AssociationResponse>> list() {
@@ -70,13 +72,13 @@ public class AssociationResource {
      */
 
     @Operation(
-            summary = "Retrieve a Tutorial by Id",
-            description = "Get a Tutorial object by specifying its id. The response is Tutorial object with id, title, description and published status.",
-            tags = { "tutorials", "get" })
+            summary = "Retrieve a Association by Id",
+            description = "Get a Association object by specifying its id. The response is Association object with id, title, description and published status.",
+            tags = { "associations", "get" })
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = AssociationResponse.class), mediaType = "application/json") }),
-            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
-            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema(implementation = AssociationResponse.class)) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema(implementation = AssociationResponse.class)) }) })
     @GetMapping(path = "/{id}")
     @ResponseBody
     public ResponseEntity<AssociationResponse> getById(@PathVariable("id") Long id) {
@@ -96,11 +98,13 @@ public class AssociationResource {
      * @return the response entity
      */
 
-    @Operation(summary = "Create a new Tutorial", tags = { "tutorials", "post" })
+    @Operation(summary = "Create a new Association",
+            description = "Get a Association object by specifying its id. The response is Association object with id, title, description and published status.",
+            tags = { "associations", "post" })
     @ApiResponses({
             @ApiResponse(responseCode = "201", content = {
                     @Content(schema = @Schema(implementation = AssociationResponse.class), mediaType = "application/json") }),
-            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema(implementation = AssociationResponse.class)) }) })
     @PostMapping
     public ResponseEntity<AssociationResponse> add(@Valid @RequestBody AssociationRequest associationRequest) throws Exception {
         Association association = associationMapper.from(associationRequest);
@@ -121,12 +125,14 @@ public class AssociationResource {
      * @return the response entity
      */
 
-    @Operation(summary = "Update a Tutorial by Id", tags = { "tutorials", "put" })
+    @Operation(summary = "Update a Association by Id",
+            description = "Get a Association object by specifying its id. The response is Association object with id, title, description and published status.",
+            tags = { "associations", "put" })
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {
                     @Content(schema = @Schema(implementation = AssociationResponse.class), mediaType = "application/json") }),
-            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }),
-            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }) })
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema(implementation = AssociationResponse.class)) }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema(implementation = AssociationResponse.class)) }) })
     @PutMapping(path = "/{id}")
     public ResponseEntity<AssociationResponse> change(@PathVariable("id") Long id, @RequestBody AssociationRequest associationRequest) {
         Association association = associationMapper.from(associationRequest);
@@ -146,9 +152,11 @@ public class AssociationResource {
      * @return the response entity
      */
 
-    @Operation(summary = "Delete a Tutorial by Id", tags = { "tutorials", "delete" })
-    @ApiResponses({ @ApiResponse(responseCode = "204", content = { @Content(schema = @Schema()) }),
-            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
+    @Operation(summary = "Delete a Association by Id",
+            description = "Get a Association object by specifying its id. The response is Association object with id, title, description and published status.",
+            tags = { "associations", "delete" })
+    @ApiResponses({ @ApiResponse(responseCode = "204", content = { @Content(schema = @Schema(implementation = AssociationResponse.class)) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema(implementation = AssociationResponse.class)) }) })
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> remove(@PathVariable("id") Long id) {
         boolean removed = associationService.remove(id);

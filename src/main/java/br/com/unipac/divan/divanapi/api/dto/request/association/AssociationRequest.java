@@ -31,8 +31,7 @@ public class AssociationRequest  implements Serializable {
 
     @Schema(description = "Phone number of the Association.",
             example = "(99) 9999-9999", required = true)
-    //@Pattern(regexp ="^\\+?[0-9. ()-]{7,25}$", message = "Phone number")
-    @Pattern(regexp = "^\\([1-9]{2}\\) 9[7-9]{1}[0-9]{3}\\-[0-9]{4}$", message = "Phone number")
+    @Pattern(regexp = "^\\(\\d{2,}\\) \\d{4,}\\-\\d{4}$", message = "Phone number")
     @NotNull
     @Size(max = 15)
     private String phone;

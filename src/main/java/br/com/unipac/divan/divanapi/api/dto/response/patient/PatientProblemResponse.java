@@ -22,8 +22,6 @@ public class PatientProblemResponse implements Serializable {
 
     @Schema(description = "Unique identifier of the PatientProblem.",
             example = "1", required = true)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Schema(description = "First Name of the PatientProblem.",

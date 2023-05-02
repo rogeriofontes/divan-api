@@ -4,6 +4,7 @@ import br.com.unipac.divan.divanapi.model.domain.AuditModel;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 @Builder
@@ -32,11 +33,11 @@ public class PsychologicalCompany extends AuditModel {
     @Schema(description = "crp number of the Psychological.",
             example = "Jessica Abigail", required = false)
     @Column(name = "company_id")
-    //@Pattern(regexp = "^\\([1-9]{2}\\) 9[7-9]{1}[0-9]{3}\\-[0-9]{4}$", message = "Mobile Phone number")
+    @Pattern(regexp = "^\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}$", message = "company Id number")
     private String companyId; //CNPJ
 
     @Schema(description = "Type of the Psychological.",
-            example = "Jessica Abigail Association", required = false, ref = "psychologicalSpeciality")
+            example = "Jessica Abigail Association", required = false, ref = "Psychological")
     @NotNull
     @OneToOne
     @JoinColumn(name = "psychological_id")

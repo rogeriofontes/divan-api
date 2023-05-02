@@ -1,9 +1,7 @@
 package br.com.unipac.divan.divanapi.api.dto.request.psychological;
 
-import br.com.unipac.divan.divanapi.model.entities.psychological.Psychological;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 import java.io.Serializable;
@@ -25,9 +23,10 @@ public class PsychologicalCompanyRequest implements Serializable {
 
     @Schema(description = "crp number of the Psychological.",
             example = "Jessica Abigail", required = false)
+    @Pattern(regexp = "^\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}$", message = "company Id number")
     private String companyId; //CNPJ
 
     @Schema(description = "Type of the Psychological.",
-            example = "Jessica Abigail Association", required = false, ref = "psychologicalSpeciality")
-    private Psychological psychological;
+            example = "Jessica Abigail Association", required = false, ref = "Psychological")
+    private Long psychologicalId;
 }

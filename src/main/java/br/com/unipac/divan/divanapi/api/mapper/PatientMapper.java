@@ -35,7 +35,6 @@ public interface PatientMapper {
     @Mapping(source = "recurrent", target = "recurrent")
     @Mapping(source = "patientTypeId", target = "patientType.id")
     @Mapping(source = "associationId", target = "association.id")
-
     @Mapping(source = "gender", target = "gender")
     @Mapping(source = "documentId", target = "documentId")
     @Mapping(source = "documentDistrict", target = "documentDistrict")

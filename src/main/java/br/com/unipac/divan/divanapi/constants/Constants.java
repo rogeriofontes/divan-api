@@ -8,6 +8,9 @@ public class Constants {
 
     public static final String BRAZILIAN_DATE = "dd/MM/yyyy HH:mm:ss";
 
+
+    public static final String BRAZILIAN_DOCUMENT_DATE = "dd/MM/yyyy";
+
     /**
      * The constant RESPONSE_UNSUCCESS.
      */

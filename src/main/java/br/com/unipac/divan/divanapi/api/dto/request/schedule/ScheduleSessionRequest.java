@@ -31,7 +31,7 @@ public class ScheduleSessionRequest implements Serializable {
     @NotNull
     private String description;
 
-    @Schema(title = "The publication date of this post.",
+    @Schema(type = "LocalDateTime", title = "The publication date of this post.",
             format = "ISO8601 date string",
             description = "Notes about the contact.",
             example = "13/09/2022 14:31:34", required = true)
@@ -40,7 +40,7 @@ public class ScheduleSessionRequest implements Serializable {
     @NotNull
     private LocalDateTime startDate;
 
-    @Schema(title = "The publication date of this post.",
+    @Schema(type = "LocalDateTime", title = "The publication date of this post.",
             format = "ISO8601 date string",
             description = "Notes about the contact.",
             example = "13/09/2022 14:31:34", required = true)
@@ -54,12 +54,12 @@ public class ScheduleSessionRequest implements Serializable {
     @NotNull
     private boolean answered;
 
-    @Schema(description = "Name of the Association.",
+    @Schema(type = "Long", description = "Name of the Association.",
             example = "Jessica Abigail Association", required = false, ref = "Association")
     @NotNull
     private Long patientId;
 
-    @Schema(description = "Name of the Association.",
+    @Schema(type = "Long", description = "Name of the Association.",
             example = "Jessica Abigail Association", required = false, ref = "Association")
     @NotNull
     private Long psychologicalId;

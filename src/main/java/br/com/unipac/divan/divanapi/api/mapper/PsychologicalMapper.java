@@ -24,6 +24,7 @@ public interface PsychologicalMapper {
     @Mapping(source = "address", target = "address")
     @Mapping(source = "associationId", target = "association.id")
     @Mapping(source = "psychologicalSpecialityId", target = "psychologicalSpeciality.id")
+    @Mapping(source = "psychologicalTypeId", target = "psychologicalType.id")
     @Mapping(source = "gender", target = "gender")
     @Mapping(source = "documentId", target = "documentId")
     @Mapping(source = "documentDistrict", target = "documentDistrict")

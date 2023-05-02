@@ -24,8 +24,6 @@ public class PsychologicalCompanyResponse implements Serializable {
 
     @Schema(description = "Unique identifier of the PsychologicalSpeciality.",
             example = "1", required = true)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Schema(description = "Company Name of the PsychologicalSpeciality.",
@@ -34,7 +32,6 @@ public class PsychologicalCompanyResponse implements Serializable {
 
     @Schema(description = "crp number of the Psychological.",
             example = "Jessica Abigail", required = false)
-    //@Pattern(regexp = "^\\([1-9]{2}\\) 9[7-9]{1}[0-9]{3}\\-[0-9]{4}$", message = "Mobile Phone number")
     private String companyId; //CNPJ
 
     @Schema(description = "Type of the Psychological.",

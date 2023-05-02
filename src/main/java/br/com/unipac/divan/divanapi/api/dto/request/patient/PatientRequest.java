@@ -1,9 +1,11 @@
 package br.com.unipac.divan.divanapi.api.dto.request.patient;
 
+import br.com.unipac.divan.divanapi.constants.Constants;
 import br.com.unipac.divan.divanapi.model.domain.Gender;
 import br.com.unipac.divan.divanapi.model.domain.MaritalStatus;
 import br.com.unipac.divan.divanapi.model.entities.association.Association;
 import br.com.unipac.divan.divanapi.model.entities.patient.PatientType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -11,6 +13,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -45,14 +48,14 @@ public class PatientRequest implements Serializable {
 
     @Schema(description = "Phone number of the Patient.",
             example = "(99) 9999-9999", required = true)
-    @Pattern(regexp = "^\\([1-9]{2}\\) 9[7-9]{1}[0-9]{3}\\-[0-9]{4}$", message = "Phone number")
+    @Pattern(regexp = "^\\(\\d{2,}\\) \\d{4,}\\-\\d{4}$", message = "Phone number")
     @NotNull
     @Size(max = 15)
     private String phone;
 
     @Schema(description = "Mobile Phone number of the Patient.",
             example = "(99) 9999-9999", required = true)
-    @Pattern(regexp = "^\\([1-9]{2}\\) 9[7-9]{1}[0-9]{3}\\-[0-9]{4}$", message = "Mobile Phone number")
+    @Pattern(regexp = "^\\(\\d{2,}\\) \\d{4,}\\-\\d{4}$", message = "Mobile Phone number")
     @NotNull
     @Size(max = 15)
     private String mobile;
@@ -85,26 +88,34 @@ public class PatientRequest implements Serializable {
 
     @Schema(description = "RG number of the Psychological.",
             example = "SP 9999999", required = false)
-    //@Pattern(regexp = "^\\([1-9]{2}\\) 9[7-9]{1}[0-9]{3}\\-[0-9]{4}$", message = "Mobile Phone number")
+    @Pattern(regexp = "^(\\d{2}\\x2E\\d{3}\\x2E\\d{3}[-]\\d{1})$|^(\\d{2}\\x2E\\d{3}\\x2E\\d{3})$", message = "document id number")
     private String documentId; //RG
 
     @Schema(description = "crp number of the Psychological.",
             example = "SP", required = false)
-    //@Pattern(regexp = "^\\([1-9]{2}\\) 9[7-9]{1}[0-9]{3}\\-[0-9]{4}$", message = "Mobile Phone number")
+    @Column(name = "document_district")
+    @Pattern(regexp = "^[A-Z]{2}$", message = "Mobile Phone number")
     private String documentDistrict;
 
-    @Schema(description = "crp number of the Psychological.",
-            example = "Jessica Abigail", required = false)
+    @Schema(description = "documentDispatchDate of the Psychological.",
+            format = "ISO8601 date string",
+            example = "13/09/2022", required = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.BRAZILIAN_DOCUMENT_DATE)
+    @DateTimeFormat(pattern = Constants.BRAZILIAN_DOCUMENT_DATE)
+    @Column(name = "document_dispatch_date")
     private LocalDate documentDispatchDate;
 
     @Schema(description = "crp number of the Psychological.",
             example = "Jessica Abigail", required = false)
-    //@Pattern(regexp = "^\\([1-9]{2}\\) 9[7-9]{1}[0-9]{3}\\-[0-9]{4}$", message = "Mobile Phone number")
+    @Pattern(regexp = "^\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}$", message = "Mobile Phone number")
     private String socialId; //CPF
 
-    @Schema(description = "crp number of the Psychological.",
-            example = "Jessica Abigail", required = false)
-    private String socialIdDispatchDate; //CPF
+    @Schema(description = "socialIdDispatchDate of the Psychological.",
+            format = "ISO8601 date string",
+            example = "13/09/2022", required = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.BRAZILIAN_DOCUMENT_DATE)
+    @DateTimeFormat(pattern = Constants.BRAZILIAN_DOCUMENT_DATE)
+    private LocalDate socialIdDispatchDate; //CPF
 
     @Schema(description = "crp number of the Psychological.",
             example = "Jessica Abigail", required = false)

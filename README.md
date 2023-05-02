@@ -20,3 +20,13 @@ http://localhost:5665/swagger-ui/index.html#/
 https://1kevinson.com/document-a-springbootrest-api-with-swagger-and-open-api/
 
 https://springdoc.org/#getting-started
+
+https://help.salesforce.com/s/articleView?id=000386675&type=1
+
+https://gist.github.com/igorcosta/3a4caa954a99035903ab
+
+https://www.dariawan.com/tutorials/spring/documenting-spring-boot-rest-api-springdoc-openapi-3/
+https://www.bezkoder.com/spring-boot-swagger-3/
+
+https://gist.github.com/igorcosta/3a4caa954a99035903ab
+https://gist.github.com/igorcosta/3a4caa954a99035903ab

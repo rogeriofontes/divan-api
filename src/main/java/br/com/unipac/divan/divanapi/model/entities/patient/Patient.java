@@ -1,10 +1,12 @@
 package br.com.unipac.divan.divanapi.model.entities.patient;
 
 
+import br.com.unipac.divan.divanapi.constants.Constants;
 import br.com.unipac.divan.divanapi.model.domain.AuditModel;
 import br.com.unipac.divan.divanapi.model.domain.Gender;
 import br.com.unipac.divan.divanapi.model.domain.MaritalStatus;
 import br.com.unipac.divan.divanapi.model.entities.association.Association;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -12,6 +14,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -101,30 +104,36 @@ public class Patient extends AuditModel {
     @Schema(description = "RG number of the Psychological.",
             example = "SP 9999999", required = false)
     @Column(name = "document_id")
-    //@Pattern(regexp = "^\\([1-9]{2}\\) 9[7-9]{1}[0-9]{3}\\-[0-9]{4}$", message = "Mobile Phone number")
+    @Pattern(regexp = "^(\\d{2}\\x2E\\d{3}\\x2E\\d{3}[-]\\d{1})$|^(\\d{2}\\x2E\\d{3}\\x2E\\d{3})$", message = "document id number")
     private String documentId; //RG
 
     @Schema(description = "crp number of the Psychological.",
             example = "SP", required = false)
     @Column(name = "document_district")
-    //@Pattern(regexp = "^\\([1-9]{2}\\) 9[7-9]{1}[0-9]{3}\\-[0-9]{4}$", message = "Mobile Phone number")
+    @Pattern(regexp = "^[A-Z]{2}$", message = "Mobile Phone number")
     private String documentDistrict;
 
-    @Schema(description = "crp number of the Psychological.",
-            example = "Jessica Abigail", required = false)
+    @Schema(description = "documentDispatchDate of the Psychological.",
+            format = "ISO8601 date string",
+            example = "13/09/2022", required = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.BRAZILIAN_DOCUMENT_DATE)
+    @DateTimeFormat(pattern = Constants.BRAZILIAN_DOCUMENT_DATE)
     @Column(name = "document_dispatch_date")
     private LocalDate documentDispatchDate;
 
     @Schema(description = "crp number of the Psychological.",
             example = "Jessica Abigail", required = false)
     @Column(name = "social_id")
-    //@Pattern(regexp = "^\\([1-9]{2}\\) 9[7-9]{1}[0-9]{3}\\-[0-9]{4}$", message = "Mobile Phone number")
+    @Pattern(regexp = "^\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}$", message = "CPF number")
     private String socialId; //CPF
 
-    @Schema(description = "crp number of the Psychological.",
-            example = "Jessica Abigail", required = false)
+    @Schema(description = "socialIdDispatchDate of the Psychological.",
+            format = "ISO8601 date string",
+            example = "13/09/2022", required = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.BRAZILIAN_DOCUMENT_DATE)
+    @DateTimeFormat(pattern = Constants.BRAZILIAN_DOCUMENT_DATE)
     @Column(name = "social_id_dispatch_date")
-    private String socialIdDispatchDate; //CPF
+    private LocalDate socialIdDispatchDate; //CPF
 
     @Schema(description = "crp number of the Psychological.",
             example = "Jessica Abigail", required = false)

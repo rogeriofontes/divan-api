@@ -19,8 +19,8 @@ public class AssociationSocialMediaResponse implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "Unique identifier of the Patient.",
+            example = "1", required = true)
     private Long id;
 
     @Schema(description = "Domain of the Association.",

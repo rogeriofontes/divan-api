@@ -16,7 +16,7 @@ public interface PsychologicalCompanyMapper {
     @InheritConfiguration
     @Mapping(source = "name", target = "name")
     @Mapping(source = "companyId", target = "companyId")
-    @Mapping(source = "psychological", target = "psychological")
+    @Mapping(source = "psychologicalId", target = "psychological.id")
     PsychologicalCompany from(PsychologicalCompanyRequest request);
 
     @InheritInverseConfiguration

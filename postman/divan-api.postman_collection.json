@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Psicóloga Clínica Isabel I7\",\n    \"email\": \"isabel2@gmail.com\",\n    \"address\": \"Av. Floriano Peixoto, 615 - Sala 302 - Centro, Uberlândia - MG, 38010-050\",\n    \"about\": \"ABRAPSO profissionais e estudantes que estejam contribuindo para o desenvolvimento da Psicologia Social no Brasil\",\n    \"recurrent\": true,\n    \"foundationDate\": \"13/09/2022 14:31:34\"\n}\n",
+							"raw": "{\n    \"name\": \"Psicóloga Clínica Isabel I7\",\n    \"phone\": \"(34) 99999-9999\",\n    \"email\": \"isabel2@gmail.com\",\n    \"address\": \"Av. Floriano Peixoto, 615 - Sala 302 - Centro, Uberlândia - MG, \",\n    \"postalCode\": \"38010-050\",\n    \"about\": \"ABRAPSO profissionais e estudantes que estejam contribuindo para o desenvolvimento da Psicologia Social no Brasil\",\n    \"active\": true,\n    \"foundationDate\": \"13/09/2022 14:31:34\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -509,6 +509,131 @@
 			]
 		},
 		{
+			"name": "schedule-sessions",
+			"item": [
+				{
+					"name": "http://localhost:5665/v1/schedule-sessions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"shortDescription\": \"Jessica Abigail\",\n  \"description\": \"Jessica Abigail\",\n  \"startDate\": \"13/09/2022 14:31:34\",\n  \"endDate\": \"13/09/2022 14:31:34\",\n  \"answered\": false,\n  \"patientId\": 1,\n  \"psychologicalId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/schedule-sessions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"schedule-sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/schedule-sessions/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"hipocondríaco\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/schedule-sessions/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"schedule-sessions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/schedule-sessions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1schedule-sessions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1schedule-sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/schedule-sessions/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/schedule-sessions/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"schedule-sessions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/schedule-sessions/1",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/schedule-sessions/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"schedule-sessions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "psychological-specialities",
 			"item": [
 				{
@@ -635,6 +760,258 @@
 			]
 		},
 		{
+			"name": "psychological-types",
+			"item": [
+				{
+					"name": "http://localhost:5665/v1/psychological-types",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"hipocondríaco\"\n}\n\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/psychological-types",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"psychological-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/psychological-types/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"hipocondríaco\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/psychological-types/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"psychological-types",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/psychological-types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/psychological-types",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"psychological-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/psychological-types/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/psychological-types/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"psychological-types",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/psychological-types/1",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/psychological-types/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"psychological-types",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "psychological-companies",
+			"item": [
+				{
+					"name": "http://localhost:5665/v1/psychological-companies",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Estudante/Pessoa Juridica/Profissional Liberal\",\n  \"companyId\": \"16.628.602/0001-28\",\n  \"psychologicalId\": \"1\"\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/psychological-companies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"psychological-companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/psychological-companies/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"hipocondríaco\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5665/v1/psychological-companies/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"psychological-companies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/psychological-companies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/psychological-companies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"psychological-companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/psychological-companies/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/psychological-companies/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"psychological-companies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5665/v1/psychological-companies/1",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5665/v1/psychological-companies/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5665",
+							"path": [
+								"v1",
+								"psychological-companies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "psychologicals",
 			"item": [
 				{
@@ -644,7 +1021,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"hipocondríaco\",\n    \"lastName\": \"hipocondríaco\",\n    \"email\": \"hipocondríaco\",\n    \"phone\": \"hipocondríaco\",\n    \"mobile\": \"hipocondríaco\",\n    \"address\": \"hipocondríaco\",\n    \"associationId\": 1,\n    \"psychologicalSpecialityId\": 1\n}",
+							"raw": "{\n    \"firstName\": \"hipocondríaco\",\n    \"lastName\": \"hipocondríaco\",\n    \"email\": \"hipocondríaco@gmail.com\",\n    \"phone\": \"(34) 99999-9999\",\n    \"mobile\": \"(34) 99999-9999\",\n    \"address\": \"Av. Floriano Peixoto, 615 - Sala 302 - Centro, Uberlândia - MG\",\n    \"recurrent\": true,\n    \"associationId\": 1,\n    \"psychologicalSpecialityId\": 1,\n    \"psychologicalTypeId\": 1,\n    \"gender\": \"MALE\",\n    \"documentId\": \"35.107.156-8\",\n    \"documentDistrict\": \"SP\",\n    \"documentDispatchDate\": \"10/01/2001\",\n    \"socialId\": \"603.548.600-20\",\n    \"socialIdDispatchDate\": \"10/01/2001\",\n    \"maritalStatus\": \"SINGLE\",\n    \"mothersName\": \"Jessica Abigail\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -896,7 +1273,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firtName\": \"Rogerio\",\n    \"lastName\": \"Fontes\",\n    \"email\": \"rogeriofontes@gmail.com\",\n    \"phone\": \"21312312312312\",\n    \"mobile\": \"2312312312\",\n    \"address\": \"vsdavsadvsdvsdvsadva\",\n    \"recurrent\": true,\n    \"patientTypeId\": 1,\n    \"associationId\": 1\n}",
+							"raw": "{\n    \"firtName\": \"Rogerio\",\n    \"lastName\": \"Fontes\",\n    \"email\": \"rogeriofontes@gmail.com\",\n    \"phone\": \"(34) 99999-9999\",\n    \"mobile\": \"(34) 99999-9999\",\n    \"address\": \"Av. Floriano Peixoto, 615 - Sala 302 - Centro, Uberlândia - MG\",\n    \"recurrent\": true,\n    \"patientTypeId\": 1,\n    \"associationId\": 1,\n    \"gender\": \"MALE\",\n    \"documentId\": \"35.107.156-8\",\n    \"documentDistrict\": \"SP\",\n    \"documentDispatchDate\": \"10/01/2001\",\n    \"socialId\": \"603.548.600-20\",\n    \"socialIdDispatchDate\": \"10/01/2001\",\n    \"maritalStatus\": \"SINGLE\",\n    \"mothersName\": \"Jessica Abigail\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1022,7 +1399,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Rogerio\",\n    \"shortDescription\": \"Fontes\",\n    \"description\": \"rogeriofontes@gmail.com\",\n    \"startDate\": \"21312312312312\",\n    \"foundationDate\": \"2312312312\",\n    \"email\": \"\",\n    \"address\": \"vsdavsadvsdvsdvsadva\",\n    \"about\": \"\",\n    \"online\": true,\n    \"url\": \"\",\n    \"repeat\": true,\n    \"associationId\": 1\n}",
+							"raw": "{\n    \"name\": \"Rogerio\",\n    \"shortDescription\": \"Fontes\",\n    \"description\": \"dasdas\",\n    \"startDate\": \"13/09/2022 14:31:34\",\n    \"foundationDate\": \"13/09/2022 14:31:34\",\n    \"email\": \"rogeriofontes@gmail.comm\",\n    \"address\": \"vsdavsadvsdvsdvsadva\",\n    \"about\": \"dfasd\",\n    \"online\": true,\n    \"url\": \"\",\n    \"repeat\": true,\n    \"associationId\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"

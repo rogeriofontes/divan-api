@@ -78,7 +78,7 @@ public class ScheduleSession extends AuditModel {
     private Patient patient;
 
     @Schema(description = "Name of the Association.",
-            example = "Jessica Abigail Association", required = false, ref = "Association")
+            example = "Jessica Abigail Association", required = false, ref = "Psychological")
     @NotNull
     @ManyToOne
     @JoinColumn(name = "psychological_id")

@@ -27,7 +27,7 @@ create table tb_psychological (
     primary key (id)
 )
 
-alter table if exists tb_psychological add constraint FKkh8qa7l9gx2dkrh2sjlev6tbl foreign key (association_id) references tb_association
-alter table if exists tb_psychological add constraint FKg9tle4vmmad7l41sq1uasyj3y foreign key (psychological_speciality_id) references tb_psychological_speciality
-alter table if exists tb_psychological add constraint FKm4pa07l8msrfcoo71dq0b9btt foreign key (psychological_type_id) references tb_psychological_type
-alter table if exists tb_psychological_company add constraint FKmlwpbj1kipb9qasrf7dir4uni foreign key (psychological_id) references tb_psychological
+--alter table if exists tb_psychological add constraint FKkh8qa7l9gx2dkrh2sjlev6tbl foreign key (association_id) references tb_association
+--alter table if exists tb_psychological add constraint FKg9tle4vmmad7l41sq1uasyj3y foreign key (psychological_speciality_id) references tb_psychological_speciality
+--alter table if exists tb_psychological add constraint FKm4pa07l8msrfcoo71dq0b9btt foreign key (psychological_type_id) references tb_psychological_type
+--alter table if exists tb_psychological_company add constraint FKmlwpbj1kipb9qasrf7dir4uni foreign key (psychological_id) references tb_psychological

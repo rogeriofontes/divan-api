@@ -15,5 +15,5 @@ create table tb_schedule_session (
     primary key (id)
 )
 
-alter table if exists tb_schedule_session add constraint FKkth34umpjvmlcdm1bd9jcd7pr foreign key (patient_id) references tb_patient
-alter table if exists tb_schedule_session add constraint FK8kq7g90ysoo1awt96wp60gl41 foreign key (psychological_id) references tb_psychological
+--alter table if exists tb_schedule_session add constraint FKkth34umpjvmlcdm1bd9jcd7pr foreign key (patient_id) references tb_patient
+--alter table if exists tb_schedule_session add constraint FK8kq7g90ysoo1awt96wp60gl41 foreign key (psychological_id) references tb_psychological

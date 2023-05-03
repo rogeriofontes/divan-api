@@ -20,7 +20,7 @@ create table tb_project (
     primary key (id)
 )
 
-alter table
-    if exists tb_project
-add
-    constraint FKb6gypll00vj0a77onvnk55hgr foreign key (association_id) references tb_association
+--alter table
+  --  if exists tb_project
+--add
+  --  constraint FKb6gypll00vj0a77onvnk55hgr foreign key (association_id) references tb_association

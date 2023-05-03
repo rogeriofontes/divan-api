@@ -98,7 +98,7 @@
 			<artifactId>flyway-core</artifactId>
 		</dependency>
 
-		<!--dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 			<exclusions>
@@ -112,7 +112,7 @@
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
-		</dependency-->
+		</dependency>
 	</dependencies>
 
 	<build>

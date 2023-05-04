@@ -25,19 +25,19 @@ create table tb_patient (
     primary key (id)
 )
 
-alter table
-    if exists tb_patient
-add
-    constraint FKan1fekvabr5x6s85c2lawj8n foreign key (association_id) references tb_association
-alter table
-    if exists tb_patient
-add
-    constraint FKhkwcoq98vt0jtnhrfaven61i2 foreign key (patient_type_id) references tb_patient_type
-alter table
-    if exists tb_patient_problem
-add
-    constraint FKckfv4qxswyf6tx9tpm2oeejq4 foreign key (patient_id) references tb_patient
-alter table
-    if exists tb_patient_problem
-add
-    constraint FKis8grc8ld6xjbgr793m86v8o4 foreign key (problem_type_id) references tb_problem_type
+--alter table
+  --  if exists tb_patient
+--add
+    --constraint FKan1fekvabr5x6s85c2lawj8n foreign key (association_id) references tb_association
+--alter table
+  --  if exists tb_patient
+--add
+  --  constraint FKhkwcoq98vt0jtnhrfaven61i2 foreign key (patient_type_id) references tb_patient_type
+--alter table
+  --  if exists tb_patient_problem
+--add
+  --  constraint FKckfv4qxswyf6tx9tpm2oeejq4 foreign key (patient_id) references tb_patient
+--alter table
+  --  if exists tb_patient_problem
+--add
+  --  constraint FKis8grc8ld6xjbgr793m86v8o4 foreign key (problem_type_id) references tb_problem_type

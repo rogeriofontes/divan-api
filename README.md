@@ -32,3 +32,7 @@ https://gist.github.com/igorcosta/3a4caa954a99035903ab
 https://gist.github.com/igorcosta/3a4caa954a99035903ab
 
 import org.hibernate.validator.constraints.CreditCardNumber;
+
+--> spring security https://github.com/natanaelsc/spring-boot-3-jwt-security/tree/main/src/main/java/br/com/security
+
+https://howtodoinjava.com/spring-security/jwt-auth-vuejs-spring-boot-security/

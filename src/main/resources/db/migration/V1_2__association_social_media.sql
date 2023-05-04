@@ -14,7 +14,7 @@ create table tb_association_social_media (
     association_id bigint not null,
     primary key (id)
 )
-alter table
-    if exists tb_association_social_media
-add
-    constraint FKm068og8exm7l782xpj0k5nby1 foreign key (association_id) references tb_association
+--alter table
+  --  if exists tb_association_social_media
+--add
+  --  constraint FKm068og8exm7l782xpj0k5nby1 foreign key (association_id) references tb_association

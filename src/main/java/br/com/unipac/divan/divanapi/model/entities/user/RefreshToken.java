@@ -1,7 +1,5 @@
 package br.com.unipac.divan.divanapi.model.entities.user;
 
-import br.com.unipac.divan.divanapi.model.domain.AuditModel;
-import br.com.unipac.divan.divanapi.model.domain.Role;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -10,11 +8,9 @@ import lombok.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-/**
- * The type Profile.
- *
- * @author Rogério Fontes
- */
+import java.io.Serializable;
+import java.time.Instant;
+
 @Builder
 @Data
 @NoArgsConstructor
@@ -22,13 +18,12 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @Entity
-@Table(name = "tb_profile")
+@Table(name = "tb_refresh_token")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonTypeName(value = "tb_profile")
+@JsonTypeName(value = "tb_refresh_token")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Schema(description = "Patient object")
-public class Profile extends AuditModel {
-    private static final long serialVersionUID = -1483351163120427247L;
+public class RefreshToken implements Serializable {
 
     @Schema(description = "Unique identifier of the Patient.",
             example = "1", required = true)
@@ -37,21 +32,13 @@ public class Profile extends AuditModel {
     @Column(nullable = false)
     private Long id;
 
-    @Schema(description = "Role of the Profile.",
-            example = "basic_user", required = true)
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20)
-    private Role role;
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
-    /**
-     * Update.
-     *
-     * @param id      the id
-     * @param profile the profile
-     */
-    public void update(Long id, Profile profile) {
-        this.setId(id);
-        this.setRole(profile.getRole());
-    }
+    @Column(nullable = false, unique = true)
+    private String token;
 
+    @Column(name = "expiry_date", nullable = false)
+    private Instant expiryDate;
 }

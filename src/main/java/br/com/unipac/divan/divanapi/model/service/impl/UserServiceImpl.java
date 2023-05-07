@@ -5,6 +5,7 @@ import br.com.unipac.divan.divanapi.model.entities.user.User;
 import br.com.unipac.divan.divanapi.model.repositories.UserRepository;
 import br.com.unipac.divan.divanapi.model.service.BaseService;
 import br.com.unipac.divan.divanapi.model.service.UserService;
+import br.com.unipac.divan.divanapi.util.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +35,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findByEmail(String email){
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User loadCurrentUser() {
+        Optional<User> optionalUser = findByEmail(SecurityUtils.getCurrentLogin());
+        if (optionalUser.isPresent()) {
+            return optionalUser.get();
+        }
+
+        return new User();
     }
 
     @Override

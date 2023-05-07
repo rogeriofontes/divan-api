@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -50,6 +51,7 @@ public class User extends AuditModel implements UserDetails { //implements UserD
 
     @Schema(description = "Email address of the User.",
             example = "jessica@ngilang.com", required = true)
+    @Email(message = "Email Address")
     @NotNull(message = "O campo \"email\" é obrigatório")
     private String email;
 
@@ -66,10 +68,10 @@ public class User extends AuditModel implements UserDetails { //implements UserD
 
     @Schema(description = "Last Access address of the User.",
             example = "jessica@ngilang.com", required = true)
-    @Email(message = "Email Address")
+
     @NotNull
     @Column(name = "last_access", nullable = false)
-    private LocalDateTime lastAccess;
+    private LocalDateTime lastAccess = LocalDateTime.now();
 
     @Builder
     public User(Long id, String name, String email, String password, Set<Profile> profiles, LocalDateTime lastAccess) {
@@ -100,7 +102,7 @@ public class User extends AuditModel implements UserDetails { //implements UserD
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         profiles.forEach(profile -> {
-            authorities.add(new SimpleGrantedAuthority(profile.getRole()));
+            authorities.add(new SimpleGrantedAuthority(profile.getRole().toString()));
         });
 
         List<GrantedAuthority> temp = new ArrayList<>(authorities.size());

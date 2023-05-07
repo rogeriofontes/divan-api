@@ -1,17 +1,18 @@
 package br.com.unipac.divan.divanapi.model.service.impl;
 
-import br.com.unipac.divan.divanapi.api.dto.request.login.AuthenticationRequest;
-import br.com.unipac.divan.divanapi.api.dto.response.login.LoginResponse;
+import br.com.unipac.divan.divanapi.api.dto.request.authentication.AuthenticationRequest;
+import br.com.unipac.divan.divanapi.api.dto.response.authentication.AuthenticationResponse;
 import br.com.unipac.divan.divanapi.model.entities.user.User;
 import br.com.unipac.divan.divanapi.model.service.AuthService;
 import br.com.unipac.divan.divanapi.model.service.PasswordCryptoService;
 import br.com.unipac.divan.divanapi.model.service.UserService;
-import br.com.unipac.divan.divanapi.util.JWTUtil;
+import br.com.unipac.divan.divanapi.util.PasswordStrengthUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
@@ -39,36 +40,49 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public LoginResponse validate(AuthenticationRequest authenticationRequest) throws Exception {
-        validateLoginRequestIsNull(authenticationRequest);
-        return resultLoginInfo(authenticationRequest);
+    public Optional<User> validate(User user) throws Exception {
+        validateLoginRequestIsNull(user);
+        return resultLoginInfo(user);
     }
 
-    private LoginResponse resultLoginInfo(AuthenticationRequest loginRequest) {
-        UserDetails userResult = loadUserByUsername(loginRequest);
+    private Optional<User> resultLoginInfo(User user) {
+        UserDetails userResult = loadUserByUsername(user);
 
         if (userResult != null && !userResult.getUsername().isEmpty()) {
-            Optional<User> user = userService.findByEmail(userResult.getUsername());
-            if (user.isPresent()) {
-                LoginResponse loginResponse = new LoginResponse();
-                loginResponse.setToken(JWTUtil.createToken(user.get().getEmail()));
-                loginResponse.setUserId(user.get().getId().longValue());
-                loginResponse.setRoles(user.get().getProfiles());
-                return loginResponse;
+            Optional<User> userFound = userService.findByEmail(userResult.getUsername());
+            if (userFound.isPresent()) {
+                AuthenticationResponse loginResponse = new AuthenticationResponse();
+                return userFound;
             }
         } else {
             //throw new ResourceFoundException("Usuário não existe na nossa base");
         }
 
-        return new LoginResponse();
+        return null;
     }
 
-    private UserDetails loadUserByUsername(AuthenticationRequest loginRequest) {
-        return customUserDetailsService.loadUserByUsername(loginRequest.getEmail());
+    @Override
+    public Optional<User> register(User user) throws Exception {
+
+        int passwordStrength = PasswordStrengthUtil.calculatePasswordStrength(user.getPassword());
+        if (passwordStrength <= 1) {
+            //throw new UserNotFoundException("A senha digitada é muito Fraca, favor usar Letras Maiúscula, minuscula, números e caracteres especiais");
+        }
+
+        log.info("Account Service: " + passwordStrength);
+
+        user.setLastAccess(LocalDateTime.now());
+        User result = userService.save(user);
+
+        return Optional.of(result);
     }
 
-    private void validateLoginRequestIsNull(AuthenticationRequest loginRequest) throws Exception {
-        if (loginRequest.getEmail() == null || loginRequest.getPassword() == null) {
+    private UserDetails loadUserByUsername(User user) {
+        return customUserDetailsService.loadUserByUsername(user.getEmail());
+    }
+
+    private void validateLoginRequestIsNull(User user) throws Exception {
+        if (user.getEmail() == null || user.getPassword() == null) {
             throw new Exception("Please fill in username and password");
         }
     }

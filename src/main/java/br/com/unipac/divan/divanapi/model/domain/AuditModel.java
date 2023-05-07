@@ -68,7 +68,7 @@ public abstract class AuditModel implements Serializable {
     @Column(name = "last_modified_date")
     @JsonIgnore
     @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
+    private LocalDateTime lastModifiedDate = DateUtil.convert(new Date());;
 
     @Schema(title = "lastModifiedBy",
             format = "ISO8601 date string",

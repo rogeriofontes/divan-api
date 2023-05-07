@@ -26,7 +26,7 @@ import java.util.List;
 public interface PatientMapper {
 
     @InheritConfiguration
-    @Mapping(source = "firtName", target = "firtName")
+    @Mapping(source = "firstName", target = "firstName")
     @Mapping(source = "lastName", target = "lastName")
     @Mapping(source = "email", target = "email")
     @Mapping(source = "phone", target = "phone")

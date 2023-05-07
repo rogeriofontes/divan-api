@@ -32,7 +32,7 @@ public class PatientRequest implements Serializable {
     @Schema(description = "First Name of the Patient.",
             example = "Jessica Abigail", required = true)
     @NotNull
-    private String firtName;
+    private String firstName;
 
     @Schema(description = "Last Name of the Patient.",
             example = "Jessica Abigail", required = true)

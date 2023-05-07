@@ -37,3 +37,11 @@ CREATE TABLE tb_user_profile (
 
 insert into tb_user_profile (user_id, profile_id) values (1, 1);
 insert into tb_user_profile (user_id, profile_id) values (1, 2);
+
+CREATE TABLE tb_refresh_token (
+    id BIGSERIAL NOT NULL,
+    user_id int8 NOT NULL,
+    token varchar(255) NOT NULL,
+    expiry_date timestamp NOT NULL,
+    primary key (id)
+);

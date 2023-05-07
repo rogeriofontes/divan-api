@@ -1,46 +1,43 @@
 package br.com.unipac.divan.divanapi.config;
 
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
+import br.com.unipac.divan.divanapi.security.filter.JWTAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * The type Web security config.
  */
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfiguration {
-
-    private JwtAuthenticationFilter jwtAuthFilter;
-    private AuthenticationProvider authenticationProvider;
 
     /**
      * The Constant AUTH_WHITELIST.
      */
-    private static final String[] AUTH_WHITELIST = {
+    private static final String[] WHITELIST = {
             // -- swagger ui
-            "/v2/api-docs",
-            "/swagger-resources",
-            "/swagger-resources/**",
-            "/configuration/ui",
-            "/configuration/security",
-            "/swagger-ui.html",
             "/webjars/**",
             "/v1/auth",
             "/v1/register",
             "/actuator/**"
+    };
+
+    private static final String[] AUTH_WHITELIST = {
+            // -- swagger ui
+            "/v1/auth/login",
+            "/v1/auth/register"
     };
 
     /**
@@ -53,13 +50,29 @@ public class SecurityConfiguration {
      */
     private UserDetailsService customUserDetailsService;
 
-    /**
-     * Instantiates a new Web security config.
-     *
-     * @param customUserDetailsService the custom user details service
-     */
+
     public SecurityConfiguration(UserDetailsService customUserDetailsService) {
         this.customUserDetailsService = customUserDetailsService;
+    }
+
+    @Bean
+    protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
+
+        httpSecurity
+                .csrf()
+                .disable()
+                .authorizeHttpRequests((authorize) ->
+                        authorize
+                                .requestMatchers(HttpMethod.POST, "/v1/auth/signup").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/v1/auth/signin").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/v1/auth/refreshtoken").permitAll()
+                                .anyRequest().authenticated()
+                                //.anyRequest().permitAll()
+                )
+                .requestCache().disable()
+                .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        return httpSecurity.build();
     }
 
     /*
@@ -69,63 +82,66 @@ public class SecurityConfiguration {
      * WebSecurityConfigurerAdapter#configure(org.springframework.security.config.
      * annotation.web.builders.HttpSecurity)
      */
-    @Bean
-    protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    // @Bean
+    // protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http
+    //     return http
+    //            .csrf().disable()
+    //             .authorizeHttpRequests( auth -> auth
+    //                  .requestMatchers(AUTH_WHITELIST).permitAll()
+    //                 .anyRequest().authenticated()
+    //            )
+    //            .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+    //.addFilterAfter(authenticationJwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+    ////     .build();
+
+       /* http
+                .csrf().disable()
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers(HttpMethod.OPTIONS).permitAll() // allow CORS option calls for Swagger UI
+                        .requestMatchers("/v1/register").permitAll()
+                        .anyRequest().authenticated())
+                .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);*/
+
+       /* http
                 .csrf()
                 .disable()
-                .authorizeHttpRequests()
-                .requestMatchers(AUTH_WHITELIST).permitAll()
-                .requestMatchers("/api/v1/auth/**").permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
-       /* httpSecurity
-                .authorizeHttpRequests()
-                .requestMatchers("/api/auth/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .exceptionHandling()
-                .authenticationEntryPoint(
-                        (request, response, authException)
-                                -> response.sendError(
-                                HttpServletResponse.SC_UNAUTHORIZED,
-                                authException.getLocalizedMessage()
-                        )
+                .authorizeHttpRequests(authorize -> authorize
+                                .anyRequest().authenticated()
+                                .requestMatchers("/v1/register").permitAll()
+                                .requestMatchers(AUTH_WHITELIST).permitAll()   // this response is 403 forbidden, expect 404 Not Found because set permitAll
+//                        .requestMatchers("/**").permitAll()     // if you release this comment, "/data" response is 404 Not Found
                 )
-                .and()
-                .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);*/
-
-        /*http.csrf().disable()
-                .authorizeHttpRequests((authz) -> authz
-                        .anyRequest().authenticated()
-                        .requestMatchers(AUTH_WHITELIST).permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                )
-                .addFilter(new JWTAuthenticationFilter())
-                .httpBasic(withDefaults());*/
-
-        return http.build();
-
-        /*httpSecurity.csrf().disable().authorizeRequests()
-                .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
+                //.authorizeHttpRequests()
+                //.requestMatchers("/v1/register").permitAll()
+                //.requestMatchers(AUTH_WHITELIST).permitAll()
+                //.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                //.anyRequest().authenticated()
+                //.and()
                 .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);*/
-    }
 
+    //return http.build();
+    //}
+
+   /* @Bean
+    public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers( new AntPathRequestMatcher("swagger-ui/**")).permitAll()
+                        .requestMatchers( new AntPathRequestMatcher("/swagger-ui/**")).permitAll()
+                        .requestMatchers( new AntPathRequestMatcher("v3/api-docs/**")).permitAll()
+                        .requestMatchers( new AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
+                        .anyRequest().authenticated())
+                .httpBasic();
+        return httpSecurity.build();
+    }*/
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers(
+                "/v1/register"
+        );
+    }
 
     /**
      * Configure global.

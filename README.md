@@ -36,3 +36,9 @@ import org.hibernate.validator.constraints.CreditCardNumber;
 --> spring security https://github.com/natanaelsc/spring-boot-3-jwt-security/tree/main/src/main/java/br/com/security
 
 https://howtodoinjava.com/spring-security/jwt-auth-vuejs-spring-boot-security/
+
+https://blog.devgenius.io/spring-boot-security-configuration-practically-explained-part6-a-deep-intro-to-56ce03860ad
+
+https://www.bezkoder.com/spring-boot-refresh-token-jwt/
+
+https://www.bezkoder.com/spring-boot-refresh-token-jwt/

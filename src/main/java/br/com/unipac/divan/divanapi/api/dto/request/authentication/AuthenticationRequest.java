@@ -1,4 +1,4 @@
-package br.com.unipac.divan.divanapi.api.dto.request.login;
+package br.com.unipac.divan.divanapi.api.dto.request.authentication;
 
 import lombok.*;
 
@@ -15,6 +15,7 @@ import java.io.Serializable;
 public class AuthenticationRequest implements Serializable {
     private static final long serialVersionUID = 4023504641313778939L;
     private Long id;
+    private String name;
     private String email;
     private String password;
 }

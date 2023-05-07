@@ -42,7 +42,7 @@ public class Patient extends AuditModel {
             example = "Jessica Abigail", required = true)
     @Column(name = "fist_name")
     @NotNull
-    private String firtName;
+    private String firstName;
 
     @Schema(description = "Last Name of the Patient.",
             example = "Jessica Abigail", required = true)
@@ -148,7 +148,7 @@ public class Patient extends AuditModel {
 
     public void update(Long id, Patient patient) {
         this.id = id;
-        this.firtName = patient.getFirtName();
+        this.firstName = patient.getFirstName();
         this.lastName = patient.getLastName();
         this.email = patient.getEmail();
         this.phone = patient.getPhone();

@@ -1,7 +1,8 @@
 package br.com.unipac.divan.divanapi.model.service;
 
-import br.com.unipac.divan.divanapi.api.dto.request.login.AuthenticationRequest;
-import br.com.unipac.divan.divanapi.api.dto.response.login.LoginResponse;
+import br.com.unipac.divan.divanapi.model.entities.user.User;
+
+import java.util.Optional;
 
 /**
  * The interface Auth service.
@@ -14,5 +15,7 @@ public interface AuthService {
      * @return the token response
      * @throws ServletException the servlet exception
      */
-    LoginResponse validate(AuthenticationRequest authenticationRequest) throws Exception;
+    Optional<User> validate(User user) throws Exception;
+
+    Optional<User> register(User user) throws Exception;
 }

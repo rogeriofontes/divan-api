@@ -2,14 +2,16 @@ package br.com.unipac.divan.divanapi.api.mapper;
 
 import br.com.unipac.divan.divanapi.api.dto.request.authentication.AuthenticationRequest;
 import br.com.unipac.divan.divanapi.api.dto.response.authentication.AuthenticationResponse;
+import br.com.unipac.divan.divanapi.api.dto.response.authentication.SignupResponse;
 import br.com.unipac.divan.divanapi.model.entities.user.User;
 import br.com.unipac.divan.divanapi.util.JWTUtil;
-import org.mapstruct.*;
-
-import java.util.List;
+import org.mapstruct.InheritConfiguration;
+import org.mapstruct.InheritInverseConfiguration;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface AuthenticationMapper {
+public interface SigninMapper {
 
     @InheritConfiguration
     @Mapping(source = "name", target = "name")
@@ -19,15 +21,12 @@ public interface AuthenticationMapper {
 
     @InheritInverseConfiguration
     @Mapping(target = "id", source = "id")
-    @Mapping(source = "profiles", target = "roles")
-    @Mapping(source = "id", target = "userId")
-    @Mapping(constant = JWTUtil.TOKEN_PREFIX, target = "tokenType")
-    //@Mapping(target = "token", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, defaultExpression = "java(getToken(user.getEmail()))")
+    @Mapping(target = "userId", expression = "java(user.getId())")
+    //@Mapping(target = "accessToken", expression = "java(token(user.getEmail()))")
+    @Mapping(target = "tokenType", constant = "Bearer")
     AuthenticationResponse to(User user);
 
-    List<AuthenticationResponse> map(List<User> requests);
-    /*default String getToken(String email) {
-        if (email == null) return null;
-        return JWTUtil.createToken(email);
-    }*/
+   // default String token(String email){
+   //     return JWTUtil.createToken(email);
+    //}
 }

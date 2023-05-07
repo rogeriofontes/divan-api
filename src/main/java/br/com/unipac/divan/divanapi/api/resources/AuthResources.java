@@ -2,10 +2,13 @@ package br.com.unipac.divan.divanapi.api.resources;
 
 
 import br.com.unipac.divan.divanapi.api.dto.request.authentication.AuthenticationRequest;
+import br.com.unipac.divan.divanapi.api.dto.request.authentication.SignupRequest;
 import br.com.unipac.divan.divanapi.api.dto.request.user.TokenRefreshRequest;
 import br.com.unipac.divan.divanapi.api.dto.response.authentication.AuthenticationResponse;
+import br.com.unipac.divan.divanapi.api.dto.response.authentication.SignupResponse;
 import br.com.unipac.divan.divanapi.api.dto.response.user.TokenRefreshResponse;
-import br.com.unipac.divan.divanapi.api.mapper.AuthenticationMapper;
+import br.com.unipac.divan.divanapi.api.mapper.SigninMapper;
+import br.com.unipac.divan.divanapi.api.mapper.SignupMapper;
 import br.com.unipac.divan.divanapi.exception.TokenRefreshException;
 import br.com.unipac.divan.divanapi.model.entities.user.RefreshToken;
 import br.com.unipac.divan.divanapi.model.entities.user.User;
@@ -27,20 +30,21 @@ import java.util.Optional;
 public class AuthResources {
 
     @Autowired
-    private AuthenticationMapper authenticationMapper;
+    private SignupMapper signupMapper;
+    @Autowired
+    private SigninMapper signinMapper;
     @Autowired
     private AuthService authService;
-
     @Autowired
     private RefreshTokenService refreshTokenService;
 
     @PostMapping("/signin")
     public ResponseEntity<AuthenticationResponse> authenticateUser(
             @RequestBody AuthenticationRequest authenticationRequest) throws Exception {
-        User from = authenticationMapper.from(authenticationRequest);
+        User from = signinMapper.from(authenticationRequest);
         Optional<User> validate = authService.validate(from);
         if (validate.isPresent()) {
-            AuthenticationResponse authenticationResponse = authenticationMapper.to(validate.get());
+            AuthenticationResponse authenticationResponse = signinMapper.to(validate.get());
             authenticationResponse.setAccessToken(JWTUtil.createToken(validate.get().getEmail()));
             RefreshToken refreshToken = refreshTokenService.createRefreshToken(validate.get().getId());
             authenticationResponse.setRefreshToken(refreshToken.getToken());
@@ -63,18 +67,15 @@ public class AuthResources {
      */
     @PostMapping("/signup")
     @ResponseBody
-    public ResponseEntity<AuthenticationResponse> signup(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
-        User from = authenticationMapper.from(authenticationRequest);
+    public ResponseEntity<SignupResponse> signup(@RequestBody SignupRequest authenticationRequest) throws Exception {
+        User from = signupMapper.from(authenticationRequest);
         Optional<User> registered = authService.register(from);
 
         if (registered.isPresent()) {
             URI location = RestUtils.getUri(registered.get().getId());
 
-            AuthenticationResponse authenticationResponse = authenticationMapper.to(registered.get());
-            //authenticationResponse.setAccessToken(JWTUtil.createToken(registered.get().getEmail()));
-            //RefreshToken refreshToken = refreshTokenService.createRefreshToken(registered.get().getId());
-            //authenticationResponse.setRefreshToken(refreshToken.getToken());
-            return ResponseEntity.created(location).body(authenticationResponse);
+            SignupResponse signupResponse = signupMapper.toSignup(registered.get());
+            return ResponseEntity.created(location).body(signupResponse);
         } else {
             return ResponseEntity.noContent().build();
         }

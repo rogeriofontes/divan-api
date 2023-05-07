@@ -1,6 +1,6 @@
 package br.com.unipac.divan.divanapi.security.interceptions;
 
-import br.com.unipac.divan.divanapi.api.dto.request.authentication.AuthenticationRequest;
+import br.com.unipac.divan.divanapi.api.dto.request.authentication.SignupRequest;
 import br.com.unipac.divan.divanapi.api.dto.response.authentication.AuthenticationResponse;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -52,7 +52,7 @@ public class AuthInterceptor implements ClientHttpRequestInterceptor {
      * @return the string
      */
     public static String encodeJWTAuth(String username, String password) {
-        AuthenticationRequest login = new AuthenticationRequest();
+        SignupRequest login = new SignupRequest();
 
         login.setEmail(username);
         login.setPassword(password);
@@ -62,7 +62,7 @@ public class AuthInterceptor implements ClientHttpRequestInterceptor {
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
         headers.add("Content-Type", "application/json");
 
-        HttpEntity<AuthenticationRequest> requestEntity = new HttpEntity<>(login, headers);
+        HttpEntity<SignupRequest> requestEntity = new HttpEntity<>(login, headers);
 
         String url = "http://localhost:8181/login";
         AuthenticationResponse response = restTemplate.postForObject(url, requestEntity, AuthenticationResponse.class);

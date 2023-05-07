@@ -1,13 +1,16 @@
 package br.com.unipac.divan.divanapi.model.service.impl;
 
-import br.com.unipac.divan.divanapi.api.dto.request.authentication.AuthenticationRequest;
+import br.com.unipac.divan.divanapi.api.dto.request.authentication.SignupRequest;
 import br.com.unipac.divan.divanapi.api.dto.response.authentication.AuthenticationResponse;
+import br.com.unipac.divan.divanapi.model.entities.user.RefreshToken;
 import br.com.unipac.divan.divanapi.model.entities.user.User;
 import br.com.unipac.divan.divanapi.model.service.AuthService;
 import br.com.unipac.divan.divanapi.model.service.PasswordCryptoService;
+import br.com.unipac.divan.divanapi.model.service.RefreshTokenService;
 import br.com.unipac.divan.divanapi.model.service.UserService;
 import br.com.unipac.divan.divanapi.util.PasswordStrengthUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,7 @@ public class AuthServiceImpl implements AuthService {
     private UserDetailsService customUserDetailsService;
     private UserService userService;
     private PasswordCryptoService cryptoService;
+
 
     /**
      * Instantiates a new Auth service.
@@ -87,7 +91,7 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
-    private boolean validated(AuthenticationRequest authenticationRequest, String password) {
+    private boolean validated(SignupRequest authenticationRequest, String password) {
         return cryptoService.matches(authenticationRequest.getPassword(), password);
     }
 }

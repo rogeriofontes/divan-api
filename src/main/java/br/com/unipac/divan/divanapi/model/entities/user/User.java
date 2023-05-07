@@ -23,11 +23,11 @@ import java.util.*;
  * @author Rogério Fontes
  */
 @Builder
-@Data
 @NoArgsConstructor
-//@AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@AllArgsConstructor
+@EqualsAndHashCode
 @ToString
+@Data
 @Entity
 @Table(name = "tb_user")
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -73,16 +73,6 @@ public class User extends AuditModel implements UserDetails { //implements UserD
     @Column(name = "last_access", nullable = false)
     private LocalDateTime lastAccess = LocalDateTime.now();
 
-    @Builder
-    public User(Long id, String name, String email, String password, Set<Profile> profiles, LocalDateTime lastAccess) {
-        this.setId(id);
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.profiles = profiles;
-        this.lastAccess = lastAccess;
-    }
-
     /**
      * Update.
      *
@@ -90,7 +80,7 @@ public class User extends AuditModel implements UserDetails { //implements UserD
      * @param user the user
      */
     public void update(Long id, User user) {
-        this .setId(id);
+        this.setId(id);
         this.setName(user.getName());
         this.setEmail(user.getEmail());
         this.setPassword(user.getPassword());
